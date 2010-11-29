@@ -12,9 +12,9 @@ __doc__="""interfaces
 
 describes the form field to the user interface.
 
-$Id: interfaces.py,v 1.0 2010/06/30 17:05:09 egor Exp $"""
+$Id: interfaces.py,v 1.1 2010/11/28 13:43:47 egor Exp $"""
 
-__version__ = "$Revision: 1.0 $"[11:-2]
+__version__ = "$Revision: 1.1 $"[11:-2]
 
 from Products.Zuul.interfaces import IComponentInfo
 from Products.Zuul.form import schema
@@ -121,3 +121,22 @@ class IHPEVAStorageVolumeInfo(IComponentInfo):
                                                                 group='Details')
     totalBytesString = schema.Text(title=u"Total Bytes", readonly=True,
                                                                 group="Details")
+
+class IHPEVAConsistencySetInfo(IComponentInfo):
+    """
+    Info adapter for HPEVA DR Group components.
+    """
+    status = schema.Text(title=u"Status", readonly=True, group='Overview')
+    participationType = schema.Text(title=u"Role",readonly=True,group='Details')
+    writeMode = schema.Text(title=u"Write Mode", readonly=True, group='Details')
+    storagePool = schema.Entity(title=u"Log Disk Group", readonly=True,
+                                                                group='Details')
+    currentPercentLogLevel = schema.Text(title=u"Log Usage", readonly=True,
+                                                                group='Details')
+    remoteCellName = schema.Text(title=u"Remote System", readonly=True,
+                                                                group='Details')
+    hostAccessMode = schema.Text(title=u"Host Access Mode", readonly=True,
+                                                                group='Details')
+    failSafe = schema.Text(title=u"Failsafe", readonly=True, group='Details')
+    suspendMode = schema.Text(title=u"Suspend Mode", readonly=True,
+                                                                group='Details')

@@ -8,13 +8,13 @@
 #
 ################################################################################
 
-__doc__="""HPEVAStorageVolume
+__doc__="""HPEVAConsistencySet
 
-HPEVAStorageVolume is an abstraction of a HPEVA_StorageVolume
+HPEVAConsistencySet is an abstraction of a HPEVA_ConsistencySet
 
-$Id: HPEVAStorageVolume.py,v 1.3 2010/11/28 12:31:34 egor Exp $"""
+$Id: HPEVAConsistencySet.py,v 1.0 2010/11/28 13:19:19 egor Exp $"""
 
-__version__ = "$Revision: 1.3 $"[11:-2]
+__version__ = "$Revision: 1.0 $"[11:-2]
 
 from Globals import DTMLFile, InitializeClass
 from AccessControl import ClassSecurityInfo
@@ -29,13 +29,13 @@ from Products.ZenUtils.Utils import convToUnits
 from Products.ZenUtils.Utils import prepId
 
 import logging
-log = logging.getLogger("zen.HPEVAStorageVolume")
+log = logging.getLogger("zen.HPEVAConsistencySet")
 
 
-def manage_addStorageVolume(context, id, userCreated, REQUEST=None):
-    """make StorageVolume"""
+def manage_addConsistencySet(context, id, userCreated, REQUEST=None):
+    """make ConsistencySet"""
     svid = prepId(id)
-    sv = HPEVAStorageVolume(svid)
+    sv = HPEVAConsistencySet(svid)
     context._setObject(svid, sv)
     sv = context._getOb(svid)
     if userCreated: sv.setUserCreatedFlag()
@@ -43,62 +43,64 @@ def manage_addStorageVolume(context, id, userCreated, REQUEST=None):
         REQUEST['RESPONSE'].redirect(context.absolute_url()+'/manage_main')
     return sv
 
-class HPEVAStorageVolume(OSComponent, HPEVAComponent):
-    """HPStorageVolume object"""
+class HPEVAConsistencySet(OSComponent, HPEVAComponent):
+    """HPConsistencySet object"""
 
-    portal_type = meta_type = 'HPEVAStorageVolume'
+    portal_type = meta_type = 'HPEVAConsistencySet'
 
-    accessType = ""
     caption = ""
-    blockSize = 0
-    mirrorCache = ""
-    preferredPath = ""
-    raidType = ""
-    readCachePolicy = ""
-    writeCachePolicy = ""
-    diskType = ""
+    failSafe = ""
+    hostAccessMode = ""
+    participationType = ""
+    remoteCellName = ""
+    suspendMode = ""
+    writeMode = ""
     state = "OK"
 
     _properties = OSComponent._properties + (
-                 {'id':'accessType', 'type':'string', 'mode':'w'},
                  {'id':'caption', 'type':'string', 'mode':'w'},
-                 {'id':'blockSize', 'type':'int', 'mode':'w'},
-                 {'id':'mirrorCache', 'type':'string', 'mode':'w'},
-                 {'id':'preferredPath', 'type':'string', 'mode':'w'},
-                 {'id':'raidType', 'type':'string', 'mode':'w'},
-                 {'id':'readCachePolicy', 'type':'string', 'mode':'w'},
-                 {'id':'writeCachePolicy', 'type':'string', 'mode':'w'},
-                 {'id':'diskType', 'type':'string', 'mode':'w'},
+                 {'id':'failSafe', 'type':'string', 'mode':'w'},
+                 {'id':'hostAccessMode', 'type':'string', 'mode':'w'},
+                 {'id':'participationType', 'type':'string', 'mode':'w'},
+                 {'id':'remoteCellName', 'type':'string', 'mode':'w'},
+                 {'id':'suspendMode', 'type':'string', 'mode':'w'},
+                 {'id':'writeMode', 'type':'string', 'mode':'w'},
                  {'id':'state', 'type':'string', 'mode':'w'},
                 )
 
     _relations = OSComponent._relations + (
         ("os", ToOne(ToManyCont,
             "ZenPacks.community.HPEVAMon.HPEVADevice.HPEVADeviceOS",
-            "virtualdisks")),
+            "drgroups")),
         ("storagepool", ToOne(ToMany,
             "ZenPacks.community.HPEVAMon.HPEVAStoragePool",
-            "virtualdisks")),
-        ("drgroup", ToOne(ToMany,
-            "ZenPacks.community.HPEVAMon.HPEVAConsistencySet",
-            "virtualdisks")),
+            "drgroups")),
+        ("virtualdisks", ToMany(
+            ToOne,
+            "ZenPacks.community.HPEVAMon.HPEVAStorageVolume",
+            "drgroup")),
         )
 
     factory_type_information = (
         {
-            'id'             : 'StorageVolume',
-            'meta_type'      : 'StorageVolume',
+            'id'             : 'ConsistencySet',
+            'meta_type'      : 'ConsistencySet',
             'description'    : """Arbitrary device grouping class""",
-            'icon'           : 'StorageVolume_icon.gif',
+            'icon'           : 'ConsistencySet_icon.gif',
             'product'        : 'ZenModel',
-            'factory'        : 'manage_addStorageVolume',
-            'immediate_view' : 'viewHPEVAStorageVolume',
+            'factory'        : 'manage_addConsistencySet',
+            'immediate_view' : 'viewHPEVAConsistencySet',
             'actions'        :
             (
                 { 'id'            : 'status'
                 , 'name'          : 'Status'
-                , 'action'        : 'viewHPEVAStorageVolume'
+                , 'action'        : 'viewHPEVAConsistencySet'
                 , 'permissions'   : (ZEN_VIEW,)
+                },
+                { 'id'            : 'members'
+                , 'name'          : 'Members'
+                , 'action'        : 'viewHPEVAConsistencySetMembers'
+                , 'permissions'   : (ZEN_VIEW, )
                 },
                 { 'id'            : 'events'
                 , 'name'          : 'Events'
@@ -144,40 +146,28 @@ class HPEVAStorageVolume(OSComponent, HPEVAComponent):
         return getattr(self.getStoragePool(), 'caption', 'Unknown')
 
 
-    security.declareProtected(ZEN_CHANGE_DEVICE, 'setDRGroup')
-    def setDRGroup(self, drgid):
+    def linkStateString(self):
         """
-        Set the drgroup relationship to the DR Group specified by the given id.
+        Return the LinkState of a DR groups using its rrd file
         """
-        drgroup = getattr(self.os().drgroups, str(drgid), None)
-        if drgroup: self.drgroup.addRelation(drgroup)
-        else: log.warn("DR group id:%s not found", drgid)
+        __pychecker__='no-returnvalues'
+        return {1: 'unknown',
+                2: 'good',
+                3: 'degraded',
+                4: 'failed',
+                }.get(self.cacheRRDValue('LinkState', 0), 'unknown')
 
 
-    security.declareProtected(ZEN_VIEW, 'getDRGroup')
-    def getDRGroup(self):
-        return self.drgroup()
-
-
-    def totalBytes(self):
-        """
-        Return the number of total bytes
-        """
-        return self.cacheRRDValue('NumberOfBlocks', 0) * self.blockSize
-
-
-    def totalBytesString(self):
-        """
-        Return the number of total bytes in human readable form ie 10MB
-        """
-        return convToUnits(self.totalBytes(), divby=1024)
+    def getCurrentPercentLogLevel(self):
+        return "%s%%"%self.cacheRRDValue('CurrentPercentLogLevel', 0)
 
 
     def getRRDNames(self):
         """
-        Return the datapoint name of this StorageVolume
+        Return the datapoint name of this ConsistencySet
         """
-        return ['StorageVolume_NumberOfBlocks']
+        return ['ConsistencySet_LinkStatus',
+                'ConsistencySet_CurrentPercentLogLevel',
+                ]
 
-
-InitializeClass(HPEVAStorageVolume)
+InitializeClass(HPEVAConsistencySet)

@@ -12,9 +12,9 @@ __doc__="""info.py
 
 Representation of HPEVA components.
 
-$Id: info.py,v 1.0 2010/06/30 17:04:28 egor Exp $"""
+$Id: info.py,v 1.1 2010/11/28 13:42:21 egor Exp $"""
 
-__version__ = "$Revision: 1.0 $"[11:-2]
+__version__ = "$Revision: 1.1 $"[11:-2]
 
 from zope.interface import implements
 from Products.Zuul.infos import ProxyProperty
@@ -204,6 +204,34 @@ class HPEVAStorageVolumeInfo(ComponentInfo):
     @info
     def storagePool(self):
         return self._object.getStoragePool()
+
+    @property
+    def status(self):
+        if not hasattr(self._object, 'statusString'): return 'Unknown'
+        else: return self._object.statusString()
+
+class HPEVAConsistencySetInfo(ComponentInfo):
+    implements(interfaces.IHPEVAConsistencySetInfo)
+
+    participationType = ProxyProperty("participationType")
+    writeMode = ProxyProperty("writeMode")
+    remoteCellName = ProxyProperty("remoteCellName")
+    hostAccessMode = ProxyProperty("hostAccessMode")
+    failSafe = ProxyProperty("failSafe")
+    suspendMode = ProxyProperty("suspendMode")
+
+    @property
+    def name(self):
+        return self._object.caption
+
+    @property
+    @info
+    def storagePool(self):
+        return self._object.getStoragePool()
+
+    @property
+    def currentPercentLogLevel(self):
+        return self._object.getCurrentPercentLogLevel()
 
     @property
     def status(self):
