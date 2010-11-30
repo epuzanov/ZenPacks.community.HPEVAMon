@@ -26,7 +26,7 @@ class fixRelations(ZenPackMigration):
             d.hw.buildRelations()
             d.os.buildRelations()
             for comp in d.getDeviceComponents():
-                d.buildRelations()
+                comp.buildRelations()
 
 fixRelations()
 

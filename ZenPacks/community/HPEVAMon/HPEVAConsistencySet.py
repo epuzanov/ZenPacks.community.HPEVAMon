@@ -12,9 +12,9 @@ __doc__="""HPEVAConsistencySet
 
 HPEVAConsistencySet is an abstraction of a HPEVA_ConsistencySet
 
-$Id: HPEVAConsistencySet.py,v 1.0 2010/11/28 13:19:19 egor Exp $"""
+$Id: HPEVAConsistencySet.py,v 1.1 2010/11/30 20:45:06 egor Exp $"""
 
-__version__ = "$Revision: 1.0 $"[11:-2]
+__version__ = "$Revision: 1.1 $"[11:-2]
 
 from Globals import DTMLFile, InitializeClass
 from AccessControl import ClassSecurityInfo
@@ -23,9 +23,7 @@ from Products.ZenRelations.RelSchema import *
 from Products.ZenModel.ZenossSecurity import *
 from HPEVAComponent import *
 
-from AccessControl import ClassSecurityInfo
 from Products.ZenUtils.Utils import convToUnits
-
 from Products.ZenUtils.Utils import prepId
 
 import logging
@@ -146,28 +144,20 @@ class HPEVAConsistencySet(OSComponent, HPEVAComponent):
         return getattr(self.getStoragePool(), 'caption', 'Unknown')
 
 
-    def linkStateString(self):
-        """
-        Return the LinkState of a DR groups using its rrd file
-        """
-        __pychecker__='no-returnvalues'
-        return {1: 'unknown',
-                2: 'good',
-                3: 'degraded',
-                4: 'failed',
-                }.get(self.cacheRRDValue('LinkState', 0), 'unknown')
-
-
     def getCurrentPercentLogLevel(self):
         return "%s%%"%self.cacheRRDValue('CurrentPercentLogLevel', 0)
+
+
+    def getLogDiskReservedCapacity(self):
+        return convToUnits(self.cacheRRDValue('LogDiskReservedCapacity', 0))
 
 
     def getRRDNames(self):
         """
         Return the datapoint name of this ConsistencySet
         """
-        return ['ConsistencySet_LinkStatus',
-                'ConsistencySet_CurrentPercentLogLevel',
+        return ['ConsistencySet_CurrentPercentLogLevel',
+                'ConsistencySet_LogDiskReservedCapacity',
                 ]
 
 InitializeClass(HPEVAConsistencySet)

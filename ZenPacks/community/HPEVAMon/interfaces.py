@@ -12,9 +12,9 @@ __doc__="""interfaces
 
 describes the form field to the user interface.
 
-$Id: interfaces.py,v 1.1 2010/11/28 13:43:47 egor Exp $"""
+$Id: interfaces.py,v 1.2 2010/11/30 20:46:34 egor Exp $"""
 
-__version__ = "$Revision: 1.1 $"[11:-2]
+__version__ = "$Revision: 1.2 $"[11:-2]
 
 from Products.Zuul.interfaces import IComponentInfo
 from Products.Zuul.form import schema
@@ -131,6 +131,8 @@ class IHPEVAConsistencySetInfo(IComponentInfo):
     writeMode = schema.Text(title=u"Write Mode", readonly=True, group='Details')
     storagePool = schema.Entity(title=u"Log Disk Group", readonly=True,
                                                                 group='Details')
+    logDiskReservedCapacity = schema.Entity(title=u"Log Disk Reserved Capacity",
+                                                readonly=True, group='Details')
     currentPercentLogLevel = schema.Text(title=u"Log Usage", readonly=True,
                                                                 group='Details')
     remoteCellName = schema.Text(title=u"Remote System", readonly=True,

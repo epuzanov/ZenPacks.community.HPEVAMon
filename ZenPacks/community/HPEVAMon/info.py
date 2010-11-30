@@ -12,9 +12,9 @@ __doc__="""info.py
 
 Representation of HPEVA components.
 
-$Id: info.py,v 1.1 2010/11/28 13:42:21 egor Exp $"""
+$Id: info.py,v 1.2 2010/11/30 20:45:46 egor Exp $"""
 
-__version__ = "$Revision: 1.1 $"[11:-2]
+__version__ = "$Revision: 1.2 $"[11:-2]
 
 from zope.interface import implements
 from Products.Zuul.infos import ProxyProperty
@@ -232,6 +232,10 @@ class HPEVAConsistencySetInfo(ComponentInfo):
     @property
     def currentPercentLogLevel(self):
         return self._object.getCurrentPercentLogLevel()
+
+    @property
+    def logDiskReservedCapacity(self):
+        return self._object.getLogDiskReservedCapacity()
 
     @property
     def status(self):

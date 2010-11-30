@@ -521,10 +521,6 @@ ZC.HPEVAConsistencySetPanel = Ext.extend(ZC.ComponentGridPanel, {
                 header: _t('Write Mode'),
                 width: 150
             },{
-                id: 'remoteCellName',
-                dataIndex: 'remoteCellName',
-                header: _t('Remote System')
-            },{
                 id: 'storagePool',
                 dataIndex: 'storagePool',
                 header: _t('Log Disk Group'),
@@ -535,6 +531,10 @@ ZC.HPEVAConsistencySetPanel = Ext.extend(ZC.ComponentGridPanel, {
                 dataIndex: 'currentPercentLogLevel',
                 header: _t('Log Usage'),
                 width: 60
+            },{
+                id: 'remoteCellName',
+                dataIndex: 'remoteCellName',
+                header: _t('Remote System')
             },{
                 id: 'monitor',
                 dataIndex: 'monitor',

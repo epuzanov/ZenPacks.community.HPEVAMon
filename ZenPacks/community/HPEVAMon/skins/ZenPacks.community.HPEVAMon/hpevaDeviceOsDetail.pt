@@ -240,13 +240,13 @@
                             tableName,'writeMode','Write Mode')">writeMode
         </th>
         <th tal:replace="structure python:here.ZenTableManager.getTableHeader(
-                            tableName,'remoteCellName','Remote System')">remoteCellName
-        </th>
-        <th tal:replace="structure python:here.ZenTableManager.getTableHeader(
                             tableName,'getStoragePoolName','Log Disk Group')">getStoragePoolName
         </th>
         <th tal:replace="structure python:here.ZenTableManager.getTableHeader(
                             tableName,'getCurrentPercentLogLevel','Log Usage')">10
+        </th>
+        <th tal:replace="structure python:here.ZenTableManager.getTableHeader(
+                            tableName,'remoteCellName','Remote System')">remoteCellName
         </th>
         <th class="tableheader" align="center" width="60">Status</th>
     </tr>
@@ -271,13 +271,13 @@
         tal:content="drgroup/writeMode">asynchronous
       </td>
       <td class="tablevalues"
-        tal:content="drgroup/remoteCellName">EVA
-      </td>
-      <td class="tablevalues"
         tal:content="drgroup/getStoragePoolName">EVA
       </td>
       <td class="tablevalues"
         tal:content="drgroup/getCurrentPercentLogLevel">10
+      </td>
+      <td class="tablevalues"
+        tal:content="drgroup/remoteCellName">EVA
       </td>
       <td tal:define="color drgroup/statusDot|string:grey" 
         class="tablevalues" style="text-align:center;">

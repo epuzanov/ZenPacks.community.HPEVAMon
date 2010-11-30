@@ -398,21 +398,6 @@ GAUGE
 True
 </property>
 </object>
-<object id='LinkStatus' module='Products.ZenModel.RRDDataPoint' class='RRDDataPoint'>
-<property select_variable="rrdtypes" type="selection" id="rrdtype" mode="w" >
-GAUGE
-</property>
-<property type="boolean" id="isrow" mode="w" >
-True
-</property>
-<tomanycont id='aliases'>
-<object id='LinkState' module='Products.ZenModel.RRDDataPointAlias' class='RRDDataPointAlias'>
-<property type="string" id="formula" mode="w" >
-"unknown":1,"good":2,"degraded":3,"failed":4
-</property>
-</object>
-</tomanycont>
-</object>
 <object id='LogDiskReservedCapacity' module='Products.ZenModel.RRDDataPoint' class='RRDDataPoint'>
 <property select_variable="rrdtypes" type="selection" id="rrdtype" mode="w" >
 GAUGE
@@ -429,9 +414,9 @@ GAUGE
 True
 </property>
 <tomanycont id='aliases'>
-<object id='OperationalState' module='Products.ZenModel.RRDDataPointAlias' class='RRDDataPointAlias'>
+<object id='LinkState' module='Products.ZenModel.RRDDataPointAlias' class='RRDDataPointAlias'>
 <property type="string" id="formula" mode="w" >
-"NORMAL":2
+"unknown":0,"good":2,"degraded":3,"failed":6
 </property>
 </object>
 </tomanycont>
@@ -451,29 +436,6 @@ True
 </object>
 </tomanycont>
 <tomanycont id='thresholds'>
-<object id='Link Status' module='Products.ZenModel.MinMaxThreshold' class='MinMaxThreshold'>
-<property type="lines" id="dsnames" mode="w" >
-['ConsistencySet_LinkStatus']
-</property>
-<property type="boolean" id="enabled" mode="w" >
-True
-</property>
-<property type="string" id="minval" mode="w" >
-2
-</property>
-<property type="string" id="maxval" mode="w" >
-2
-</property>
-<property type="string" id="eventClass" mode="w" >
-/Status/HPEVAConsistencySet
-</property>
-<property type="int" id="severity" mode="w" >
-3
-</property>
-<property type="int" id="escalateCount" mode="w" >
-0
-</property>
-</object>
 <object id='Log usage' module='Products.ZenModel.MinMaxThreshold' class='MinMaxThreshold'>
 <property type="lines" id="dsnames" mode="w" >
 ['ConsistencySet_CurrentPercentLogLevel']
@@ -542,7 +504,7 @@ True
 -1
 </property>
 <property type="boolean" id="hasSummary" mode="w" >
-False
+True
 </property>
 <tomanycont id='graphPoints'>
 <object id='LeftTransmit' module='Products.ZenModel.DataPointGraphPoint' class='DataPointGraphPoint'>
@@ -599,7 +561,7 @@ True
 -1
 </property>
 <property type="boolean" id="hasSummary" mode="w" >
-False
+True
 </property>
 <property type="long" id="sequence" mode="w" >
 1
@@ -659,7 +621,7 @@ False
 100
 </property>
 <property type="boolean" id="hasSummary" mode="w" >
-False
+True
 </property>
 <property type="long" id="sequence" mode="w" >
 2
@@ -3290,6 +3252,24 @@ AVERAGE
 </object>
 <!-- ('', 'zport', 'dmd', 'Events', 'Status', 'HPEVAConsistencySet') -->
 <object id='/zport/dmd/Events/Status/HPEVAConsistencySet' module='Products.ZenEvents.EventClass' class='EventClass'>
+<property type="text" id="transform" mode="w" >
+status = float(evt.message.split()[-1]) 
+state = {0:'Unknown',1:'Other',2:'OK',3:'Degraded',4:'Stressed',5:'Predictive Failure',6:'Error',7:'Non-Recoverable Error',8:'Starting',9:'Stopping',10:'Stopped',11:'In Service',12:'No Contact',13:'Lost Communication',14:'Aborted',15:'Dormant',16:'Supporting Entity in Error',17:'Completed',18:'Power Mode'}.get(status, 'Unknown')
+evt.summary = "%s (%s)"%(evt.message, state)
+evt.severity = {0:3,1:3,2:0,3:4,4:3,5:3,6:4,7:5,8:2,9:3,10:4,11:2,12:3,13:4,14:4,15:3,16:4,17:0,18:3}.get(status, 3)
+if evt.firstTime == evt.lastTime:
+    device.os.drgroups._getOb(evt.component).state = state
+    txnCommit()
+</property>
+<property type="text" id="transform" mode="w" >
+status = float(evt.message.split()[-1]) 
+state = {0:'Unknown',1:'Other',2:'OK',3:'Degraded',4:'Stressed',5:'Predictive Failure',6:'Error',7:'Non-Recoverable Error',8:'Starting',9:'Stopping',10:'Stopped',11:'In Service',12:'No Contact',13:'Lost Communication',14:'Aborted',15:'Dormant',16:'Supporting Entity in Error',17:'Completed',18:'Power Mode'}.get(status, 'Unknown')
+evt.summary = "%s (%s)"%(evt.message, state)
+evt.severity = {0:3,1:3,2:0,3:4,4:3,5:3,6:4,7:5,8:2,9:3,10:4,11:2,12:3,13:4,14:4,15:3,16:4,17:0,18:3}.get(status, 3)
+if evt.firstTime == evt.lastTime:
+    device.os.drgroups._getOb(evt.component).state = state
+    txnCommit()
+</property>
 </object>
 <!-- ('', 'zport', 'dmd', 'Events', 'Status', 'HPEVADiskDrive') -->
 <object id='/zport/dmd/Events/Status/HPEVADiskDrive' module='Products.ZenEvents.EventClass' class='EventClass'>
