@@ -12,9 +12,9 @@ __doc__="""HPEVAConsistencySet
 
 HPEVAConsistencySet is an abstraction of a HPEVA_ConsistencySet
 
-$Id: HPEVAConsistencySet.py,v 1.1 2010/11/30 20:45:06 egor Exp $"""
+$Id: HPEVAConsistencySet.py,v 1.2 2010/12/06 09:55:38 egor Exp $"""
 
-__version__ = "$Revision: 1.1 $"[11:-2]
+__version__ = "$Revision: 1.2 $"[11:-2]
 
 from Globals import DTMLFile, InitializeClass
 from AccessControl import ClassSecurityInfo
@@ -149,7 +149,7 @@ class HPEVAConsistencySet(OSComponent, HPEVAComponent):
 
 
     def getLogDiskReservedCapacity(self):
-        return convToUnits(self.cacheRRDValue('LogDiskReservedCapacity', 0))
+        return convToUnits(self.cacheRRDValue('LogDiskReservedCapacity', 0)*512)
 
 
     def getRRDNames(self):
