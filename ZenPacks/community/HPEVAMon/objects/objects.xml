@@ -8,9 +8,6 @@ Basic template for HP EVA Storage
 <property type="string" id="targetPythonClass" mode="w" >
 Products.ZenModel.Device
 </property>
-<property visible="True" type="string" id="zendoc" >
-Basic template for HP EVA Storage
-</property>
 <tomanycont id='datasources'>
 <object id='StatisticalData' module='ZenPacks.community.WBEMDataSource.datasources.WBEMDataSource' class='WBEMDataSource'>
 <property select_variable="sourcetypes" type="selection" id="sourcetype" mode="w" >
@@ -354,9 +351,6 @@ Data Replication groups status and performance template for HP EVA Storage
 <property type="string" id="targetPythonClass" mode="w" >
 ZenPacks.community.HPEVAMon.HPEVAConsistencySet
 </property>
-<property visible="True" type="string" id="zendoc" >
-Data Replication groups status and performance template for HP EVA Storage
-</property>
 <tomanycont id='datasources'>
 <object id='ConsistencySet' module='ZenPacks.community.WBEMDataSource.datasources.WBEMDataSource' class='WBEMDataSource'>
 <property select_variable="sourcetypes" type="selection" id="sourcetype" mode="w" >
@@ -675,9 +669,6 @@ DiskDrive performance template for HP EVA Storage
 </property>
 <property type="string" id="targetPythonClass" mode="w" >
 ZenPacks.community.HPEVAMon.HPEVADiskDrive
-</property>
-<property visible="True" type="string" id="zendoc" >
-DiskDrive performance template for HP EVA Storage
 </property>
 <tomanycont id='datasources'>
 <object id='DiskDrive' module='ZenPacks.community.WBEMDataSource.datasources.WBEMDataSource' class='WBEMDataSource'>
@@ -1151,9 +1142,6 @@ Disk FC Port template for HP EVA Storage
 <property type="string" id="targetPythonClass" mode="w" >
 ZenPacks.community.HPEVAMon.HPEVADiskFCPort
 </property>
-<property visible="True" type="string" id="zendoc" >
-Disk FC Port template for HP EVA Storage
-</property>
 <tomanycont id='datasources'>
 <object id='DiskFCPort' module='ZenPacks.community.WBEMDataSource.datasources.WBEMDataSource' class='WBEMDataSource'>
 <property select_variable="sourcetypes" type="selection" id="sourcetype" mode="w" >
@@ -1219,9 +1207,6 @@ Host FC Port template for HP EVA Storage
 </property>
 <property type="string" id="targetPythonClass" mode="w" >
 ZenPacks.community.HPEVAMon.HPEVAHostFCPort
-</property>
-<property visible="True" type="string" id="zendoc" >
-Host FC Port template for HP EVA Storage
 </property>
 <tomanycont id='datasources'>
 <object id='HostFCPort' module='ZenPacks.community.WBEMDataSource.datasources.WBEMDataSource' class='WBEMDataSource'>
@@ -1703,9 +1688,6 @@ Disk Enclosure template for HP EVA Storage
 <property type="string" id="targetPythonClass" mode="w" >
 ZenPacks.community.HPEVAMon.HPEVAStorageDiskEnclosure
 </property>
-<property visible="True" type="string" id="zendoc" >
-Disk Enclosure template for HP EVA Storage
-</property>
 <tomanycont id='datasources'>
 <object id='StorageDiskEnclosure' module='ZenPacks.community.WBEMDataSource.datasources.WBEMDataSource' class='WBEMDataSource'>
 <property select_variable="sourcetypes" type="selection" id="sourcetype" mode="w" >
@@ -1771,9 +1753,6 @@ Disk Group performance template for HP EVA Storage
 </property>
 <property type="string" id="targetPythonClass" mode="w" >
 ZenPacks.community.HPEVAMon.HPEVAStoragePool
-</property>
-<property visible="True" type="string" id="zendoc" >
-Disk Group performance template for HP EVA Storage
 </property>
 <tomanycont id='datasources'>
 <object id='StoragePool' module='ZenPacks.community.WBEMDataSource.datasources.WBEMDataSource' class='WBEMDataSource'>
@@ -2040,9 +2019,6 @@ Storage Controller performance template for HP EVA Storage
 </property>
 <property type="string" id="targetPythonClass" mode="w" >
 ZenPacks.community.HPEVAMon.HPEVAStorageProcessorCard
-</property>
-<property visible="True" type="string" id="zendoc" >
-Storage Controller performance template for HP EVA Storage
 </property>
 <tomanycont id='datasources'>
 <object id='StatisticalData' module='ZenPacks.community.WBEMDataSource.datasources.WBEMDataSource' class='WBEMDataSource'>
@@ -2622,9 +2598,6 @@ Virtual Disk performance template for HP EVA Storage
 </property>
 <property type="string" id="targetPythonClass" mode="w" >
 ZenPacks.community.HPEVAMon.HPEVAStorageVolume
-</property>
-<property visible="True" type="string" id="zendoc" >
-Virtual Disk performance template for HP EVA Storage
 </property>
 <tomanycont id='datasources'>
 <object id='StatisticalData' module='ZenPacks.community.WBEMDataSource.datasources.WBEMDataSource' class='WBEMDataSource'>
