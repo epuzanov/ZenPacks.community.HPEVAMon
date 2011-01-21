@@ -47,6 +47,7 @@
 
         <browser:viewlet
                  name="js-hpevamon"
+                 for=".HPEVADevice.HPEVADevice"
                  paths="/++resource++hpevamon/HPEVAMon.js"
                  weight="10"
                  manager="Products.ZenUI3.browser.interfaces.IJavaScriptSrcManager"
