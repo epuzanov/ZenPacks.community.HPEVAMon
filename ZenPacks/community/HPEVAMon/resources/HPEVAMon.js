@@ -88,12 +88,12 @@ ZC.HPEVADiskDrivePanel = Ext.extend(ZC.ComponentGridPanel, {
                 id: 'diskType',
                 dataIndex: 'diskType',
                 header: _t('Type'),
-                width: 160,
+                width: 160
             },{
                 id: 'size',
                 dataIndex: 'size',
                 header: _t('Size'),
-                renderer: Zenoss.render.bytesString,
+                renderer: Zenoss.render.bytesString
             },{
                 id: 'monitor',
                 dataIndex: 'monitor',
@@ -154,20 +154,20 @@ ZC.HPEVAFCPortPanel = Ext.extend(ZC.ComponentGridPanel, {
                 dataIndex: 'wwn',
                 header: _t('WWN'),
                 sortable: true,
-                width: 160,
+                width: 160
             },{
                 id: 'networkAddresses',
                 dataIndex: 'networkAddresses',
                 sortable: true,
-                header: _t('Network'),
+                header: _t('Network')
             },{
                 id: 'linkTechnology',
                 dataIndex: 'linkTechnology',
-                header: _t('Link Technology'),
+                header: _t('Link Technology')
             },{
                 id: 'type',
                 dataIndex: 'type',
-                header: _t('Type'),
+                header: _t('Type')
             },{
                 id: 'speed',
                 dataIndex: 'speed',
@@ -383,7 +383,7 @@ ZC.HPEVAStorageProcessorCardPanel = Ext.extend(ZC.ComponentGridPanel, {
             },{
                 id: 'uptime',
                 dataIndex: 'uptime',
-                header: _t('Uptime'),
+                header: _t('Uptime')
             },{
                 id: 'monitor',
                 dataIndex: 'monitor',
