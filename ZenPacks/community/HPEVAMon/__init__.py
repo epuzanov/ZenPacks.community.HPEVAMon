@@ -57,7 +57,7 @@ class ZenPack(ZenPackBase):
         if hasattr(self.dmd.Reports, 'Device Reports'):
             devReports = self.dmd.Reports['Device Reports']
             rClass = devReports.getReportClass()
-	    if not hasattr(devReports, 'HP EVA Reports'):
+            if not hasattr(devReports, 'HP EVA Reports'):
                 dc = rClass('HP EVA Reports', None)
                 devReports._setObject('HP EVA Reports', dc)
         for devClass, properties in self.dcProperties.iteritems():
@@ -68,7 +68,7 @@ class ZenPack(ZenPackBase):
         if hasattr(self.dmd.Reports, 'Device Reports'):
             devReports = self.dmd.Reports['Device Reports']
             rClass = devReports.getReportClass()
-	    if not hasattr(devReports, 'HP EVA Reports'):
+            if not hasattr(devReports, 'HP EVA Reports'):
                 dc = rClass('HP EVA Reports', None)
                 devReports._setObject('HP EVA Reports', dc)
         for devClass, properties in self.dcProperties.iteritems():
@@ -87,5 +87,5 @@ class ZenPack(ZenPackBase):
         ZenPackBase.remove(self, app, leaveObjects)
         if hasattr(self.dmd.Reports, 'Device Reports'):
             devReports = self.dmd.Reports['Device Reports']
-	    if hasattr(devReports, 'HP EVA Reports'):
+            if hasattr(devReports, 'HP EVA Reports'):
                 devReports._delObject('HP EVA Reports')

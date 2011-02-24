@@ -997,7 +997,7 @@ AVERAGE
 500
 </property>
 <property type="string" id="units" mode="w" >
-ms
+seconds
 </property>
 <property type="boolean" id="log" mode="w" >
 False
@@ -1037,6 +1037,9 @@ Read
 <property type="long" id="limit" mode="w" >
 -1
 </property>
+<property type="string" id="rpn" mode="w" >
+100000,/
+</property>
 <property type="string" id="dpName" mode="w" >
 StatisticalData_ReadLatencyTime
 </property>
@@ -1065,6 +1068,9 @@ Write
 </property>
 <property type="long" id="limit" mode="w" >
 -1
+</property>
+<property type="string" id="rpn" mode="w" >
+100000,/
 </property>
 <property type="string" id="dpName" mode="w" >
 StatisticalData_WriteLatencyTime
@@ -1543,7 +1549,7 @@ AVERAGE
 500
 </property>
 <property type="string" id="units" mode="w" >
-ms
+seconds
 </property>
 <property type="boolean" id="log" mode="w" >
 False
@@ -1583,6 +1589,9 @@ Read
 <property type="long" id="limit" mode="w" >
 -1
 </property>
+<property type="string" id="rpn" mode="w" >
+100000,/
+</property>
 <property type="string" id="dpName" mode="w" >
 StatisticalData_ReadLatencyTime
 </property>
@@ -1611,6 +1620,9 @@ Write
 </property>
 <property type="long" id="limit" mode="w" >
 -1
+</property>
+<property type="string" id="rpn" mode="w" >
+100000,/
 </property>
 <property type="string" id="dpName" mode="w" >
 StatisticalData_WriteLatencyTime
@@ -2511,7 +2523,7 @@ AVERAGE
 500
 </property>
 <property type="string" id="units" mode="w" >
-ms
+seconds
 </property>
 <property type="boolean" id="log" mode="w" >
 False
@@ -2551,6 +2563,9 @@ Read
 <property type="long" id="limit" mode="w" >
 -1
 </property>
+<property type="string" id="rpn" mode="w" >
+100000,/
+</property>
 <property type="string" id="dpName" mode="w" >
 StatisticalData_ReadLatencyTime
 </property>
@@ -2579,6 +2594,9 @@ Write
 </property>
 <property type="long" id="limit" mode="w" >
 -1
+</property>
+<property type="string" id="rpn" mode="w" >
+100000,/
 </property>
 <property type="string" id="dpName" mode="w" >
 StatisticalData_WriteLatencyTime
@@ -3111,7 +3129,7 @@ AVERAGE
 500
 </property>
 <property type="string" id="units" mode="w" >
-ms
+seconds
 </property>
 <property type="boolean" id="log" mode="w" >
 False
@@ -3151,6 +3169,9 @@ ${graphPoint/id}
 <property type="long" id="limit" mode="w" >
 -1
 </property>
+<property type="string" id="rpn" mode="w" >
+100000,/
+</property>
 <property type="string" id="dpName" mode="w" >
 StatisticalData_ReadHitLatencyTime
 </property>
@@ -3180,6 +3201,9 @@ ${graphPoint/id}
 <property type="long" id="limit" mode="w" >
 -1
 </property>
+<property type="string" id="rpn" mode="w" >
+100000,/
+</property>
 <property type="string" id="dpName" mode="w" >
 StatisticalData_ReadMissLatencyTime
 </property>
@@ -3208,6 +3232,9 @@ ${graphPoint/id}
 </property>
 <property type="long" id="limit" mode="w" >
 -1
+</property>
+<property type="string" id="rpn" mode="w" >
+100000,/
 </property>
 <property type="string" id="dpName" mode="w" >
 StatisticalData_WriteLatencyTime
