@@ -1,7 +1,7 @@
 ################################################################################
 #
 # This program is part of the HPEVAMon Zenpack for Zenoss.
-# Copyright (C) 2010 Egor Puzanov.
+# Copyright (C) 2010, 2011 Egor Puzanov.
 #
 # This program can be used under the GNU General Public License version 2
 # You can find full information here: http://www.zenoss.com/oss
@@ -12,19 +12,17 @@ __doc__="""HPEVADevice
 
 HPEVADevice is an abstraction of a HP EVA
 
-$Id: HPEVADevice.py,v 1.2 2010/07/01 09:34:35 egor Exp $"""
+$Id: HPEVADevice.py,v 1.3 2011/02/28 20:27:37 egor Exp $"""
 
-__version__ = "$Revision: 1.2 $"[11:-2]
+__version__ = "$Revision: 1.3 $"[11:-2]
 
 from Globals import InitializeClass
 from Products.ZenModel.ZenossSecurity import ZEN_VIEW, ZEN_CHANGE_DEVICE
 from Products.ZenModel.Device import Device
 from Products.ZenModel.ManagedEntity import ManagedEntity
-from Products.ZenModel.OperatingSystem import OperatingSystem
 from Products.ZenModel.ZenStatus import ZenStatus
 from ZenPacks.community.HPEVAMon.HPEVADeviceHW import HPEVADeviceHW
 from ZenPacks.community.HPEVAMon.HPEVADeviceOS import HPEVADeviceOS
-from Products.ZenRelations.RelSchema import ToManyCont, ToOne
 
 
 class HPEVADevice(Device):

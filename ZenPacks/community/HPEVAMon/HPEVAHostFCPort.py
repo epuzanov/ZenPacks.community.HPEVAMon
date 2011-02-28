@@ -1,7 +1,7 @@
 ################################################################################
 #
 # This program is part of the HPEVAMon Zenpack for Zenoss.
-# Copyright (C) 2010 Egor Puzanov.
+# Copyright (C) 2010, 2011 Egor Puzanov.
 #
 # This program can be used under the GNU General Public License version 2
 # You can find full information here: http://www.zenoss.com/oss
@@ -12,14 +12,14 @@ __doc__="""HPEVAHostFCPort
 
 HPEVAHostFCPort is an abstraction of a HPEVA_HostFCPort
 
-$Id: HPEVAHostFCPort.py,v 1.4 2010/11/28 13:11:33 egor Exp $"""
+$Id: HPEVAHostFCPort.py,v 1.5 2011/02/28 22:13:53 egor Exp $"""
 
-__version__ = "$Revision: 1.4 $"[11:-2]
+__version__ = "$Revision: 1.5 $"[11:-2]
 
-from Globals import DTMLFile, InitializeClass
+from Globals import InitializeClass
 from AccessControl import ClassSecurityInfo
-from Products.ZenModel.HWComponent import *
-from Products.ZenRelations.RelSchema import *
+from Products.ZenModel.HWComponent import HWComponent
+from Products.ZenRelations.RelSchema import ToOne, ToMany, ToManyCont
 from Products.ZenModel.ZenossSecurity import *
 from HPEVAComponent import *
 
@@ -138,6 +138,13 @@ class HPEVAHostFCPort(HWComponent, HPEVAComponent):
         """
         if self.networkAddresses: return '<br>'.join(self.networkAddresses)
         else: return 'Unknown'
+
+
+    def wwnString(self):
+        """
+        Return the wwn string
+        """
+        return '-'.join([self.wwn[s*4:s*4+4] for s in range(4)])
 
 
     def getRRDTemplates(self):

@@ -1,7 +1,7 @@
 ################################################################################
 #
 # This program is part of the HPEVAMon Zenpack for Zenoss.
-# Copyright (C) 2010 Egor Puzanov.
+# Copyright (C) 2010, 2011 Egor Puzanov.
 #
 # This program can be used under the GNU General Public License version 2
 # You can find full information here: http://www.zenoss.com/oss
@@ -12,16 +12,16 @@ __doc__="""HPEVAConsistencySet
 
 HPEVAConsistencySet is an abstraction of a HPEVA_ConsistencySet
 
-$Id: HPEVAConsistencySet.py,v 1.2 2010/12/06 09:55:38 egor Exp $"""
+$Id: HPEVAConsistencySet.py,v 1.3 2011/02/28 20:40:09 egor Exp $"""
 
-__version__ = "$Revision: 1.2 $"[11:-2]
+__version__ = "$Revision: 1.3 $"[11:-2]
 
-from Globals import DTMLFile, InitializeClass
+from Globals import InitializeClass
 from AccessControl import ClassSecurityInfo
 from Products.ZenModel.OSComponent import *
-from Products.ZenRelations.RelSchema import *
+from Products.ZenRelations.RelSchema import ToOne, ToMany, ToManyCont
 from Products.ZenModel.ZenossSecurity import *
-from HPEVAComponent import *
+from HPEVAComponent import HPEVAComponent
 
 from Products.ZenUtils.Utils import convToUnits
 from Products.ZenUtils.Utils import prepId

@@ -1,7 +1,7 @@
 ################################################################################
 #
 # This program is part of the HPEVAMon Zenpack for Zenoss.
-# Copyright (C) 2010 Egor Puzanov.
+# Copyright (C) 2010, 2011 Egor Puzanov.
 #
 # This program can be used under the GNU General Public License version 2
 # You can find full information here: http://www.zenoss.com/oss
@@ -12,16 +12,16 @@ __doc__="""HPEVAStorageProcessorCard
 
 HPEVAStorageProcessorCard is an abstraction of a HPEVA_StorageProcessorCard
 
-$Id: HPEVAStorageProcessorCard.py,v 1.2 2010/05/18 13:37:38 egor Exp $"""
+$Id: HPEVAStorageProcessorCard.py,v 1.3 2011/02/28 20:54:55 egor Exp $"""
 
-__version__ = "$Revision: 1.2 $"[11:-2]
+__version__ = "$Revision: 1.3 $"[11:-2]
 
-from Globals import DTMLFile, InitializeClass
+from Globals import InitializeClass
 from AccessControl import ClassSecurityInfo
-from Products.ZenModel.ExpansionCard import *
-from Products.ZenRelations.RelSchema import *
+from Products.ZenModel.ExpansionCard import ExpansionCard
+from Products.ZenRelations.RelSchema import ToOne, ToMany
 from Products.ZenModel.ZenossSecurity import *
-from HPEVAComponent import *
+from HPEVAComponent import HPEVAComponent
 
 class HPEVAStorageProcessorCard(ExpansionCard, HPEVAComponent):
     """HPStorageProcessorCard object"""
@@ -89,6 +89,7 @@ class HPEVAStorageProcessorCard(ExpansionCard, HPEVAComponent):
 
     security = ClassSecurityInfo()
 
+
     security.declareProtected(ZEN_VIEW, 'getManufacturerLink')
     def getManufacturerLink(self, target=None):
         if self.productClass():
@@ -97,11 +98,13 @@ class HPEVAStorageProcessorCard(ExpansionCard, HPEVAComponent):
             return url
         return ""
 
+
     security.declareProtected(ZEN_VIEW, 'getProductLink')
     def getProductLink(self, target=None):
         url = self.productClass.getPrimaryLink()
         if target: url = url.replace(">", " target='%s'>" % target, 1)
         return url
+
 
     def sysUpTime(self):
         """
@@ -110,6 +113,7 @@ class HPEVAStorageProcessorCard(ExpansionCard, HPEVAComponent):
         cpuUpTime = round(self.cacheRRDValue('CntrCpuUpTime', -1))
         if cpuUpTime == -1: return -1
         return cpuUpTime / 10
+
 
     def uptimeString(self):
         """
@@ -131,10 +135,12 @@ class HPEVAStorageProcessorCard(ExpansionCard, HPEVAComponent):
         return "%02dd:%02dh:%02dm:%02ds" % (
             days, hour, mins, secs)
 
+
     def getRRDNames(self):
         """
         Return the datapoint name of this StorageProcessorCard
         """
         return ['StorageProcessorCard_CntrCpuUpTime']
+
 
 InitializeClass(HPEVAStorageProcessorCard)

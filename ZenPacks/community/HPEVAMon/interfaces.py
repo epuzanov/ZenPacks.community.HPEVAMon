@@ -1,7 +1,7 @@
 ################################################################################
 #
 # This program is part of the HPEVAMon Zenpack for Zenoss.
-# Copyright (C) 2010 Egor Puzanov.
+# Copyright (C) 2010, 2011 Egor Puzanov.
 #
 # This program can be used under the GNU General Public License version 2
 # You can find full information here: http://www.zenoss.com/oss
@@ -12,9 +12,9 @@ __doc__="""interfaces
 
 describes the form field to the user interface.
 
-$Id: interfaces.py,v 1.2 2010/11/30 20:46:34 egor Exp $"""
+$Id: interfaces.py,v 1.3 2011/02/28 21:00:30 egor Exp $"""
 
-__version__ = "$Revision: 1.2 $"[11:-2]
+__version__ = "$Revision: 1.3 $"[11:-2]
 
 from Products.Zuul.interfaces import IComponentInfo
 from Products.Zuul.form import schema
@@ -31,7 +31,7 @@ class IHPEVADiskDriveInfo(IComponentInfo):
     product = schema.Entity(title=u"Model", readonly=True, group='Details')
     serialNumber = schema.Text(title=u"Serial #", readonly=True,group='Details')
     FWRev = schema.Text(title=u"Firmware", readonly=True, group='Details')
-    size = schema.Int(title=u"Size", readonly=True, group='Details')
+    size = schema.Text(title=u"Size", readonly=True, group='Details')
     diskType = schema.Text(title=u"Type", readonly=True, group='Details')
     enclosure = schema.Entity(title=u"Enclosure", readonly=True,group='Details')
     bay = schema.Int(title=u"Bay", readonly=True, group='Details')

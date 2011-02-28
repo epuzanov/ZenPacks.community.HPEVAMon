@@ -40,7 +40,7 @@
            tal:content="structure python:port.urlLink(text=port.interfaceName,
                                                     attrs={'target':'_top'})"/>
       </td>
-      <td class="tablevalues" tal:content="port/wwn"/>
+      <td class="tablevalues" tal:content="port/wwnString"/>
       <td class="tablevalues" tal:content="structure port/networkString"/>
       <td class="tablevalues" tal:content="port/linkTechnology"/>
       <td class="tablevalues" tal:content="port/type"/>

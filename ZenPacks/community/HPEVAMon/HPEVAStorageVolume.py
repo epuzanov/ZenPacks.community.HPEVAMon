@@ -1,7 +1,7 @@
 ################################################################################
 #
 # This program is part of the HPEVAMon Zenpack for Zenoss.
-# Copyright (C) 2010 Egor Puzanov.
+# Copyright (C) 2010, 2011 Egor Puzanov.
 #
 # This program can be used under the GNU General Public License version 2
 # You can find full information here: http://www.zenoss.com/oss
@@ -12,16 +12,16 @@ __doc__="""HPEVAStorageVolume
 
 HPEVAStorageVolume is an abstraction of a HPEVA_StorageVolume
 
-$Id: HPEVAStorageVolume.py,v 1.3 2010/11/28 12:31:34 egor Exp $"""
+$Id: HPEVAStorageVolume.py,v 1.4 2011/02/28 20:50:30 egor Exp $"""
 
-__version__ = "$Revision: 1.3 $"[11:-2]
+__version__ = "$Revision: 1.4 $"[11:-2]
 
-from Globals import DTMLFile, InitializeClass
+from Globals import InitializeClass
 from AccessControl import ClassSecurityInfo
-from Products.ZenModel.OSComponent import *
-from Products.ZenRelations.RelSchema import *
+from Products.ZenModel.OSComponent import OSComponent
+from Products.ZenRelations.RelSchema import ToOne, ToMany, ToManyCont
 from Products.ZenModel.ZenossSecurity import *
-from HPEVAComponent import *
+from HPEVAComponent import HPEVAComponent
 
 from AccessControl import ClassSecurityInfo
 from Products.ZenUtils.Utils import convToUnits

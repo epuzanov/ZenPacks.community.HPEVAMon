@@ -25,7 +25,7 @@
     </tr>
     <tr>
       <td class="tableheader" align=left>Node World Wide Name</td>
-      <td class="tablevalues" tal:content="here/wwn">1</td>
+      <td class="tablevalues" tal:content="here/wwnString">1</td>
       <td class="tableheader" align=left>Status</td>
       <td class="tablevalues" tal:content="here/statusString">1</td>
     </tr>      

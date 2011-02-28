@@ -1,7 +1,7 @@
 ################################################################################
 #
 # This program is part of the HPEVAMon Zenpack for Zenoss.
-# Copyright (C) 2010 Egor Puzanov.
+# Copyright (C) 2010, 2011 Egor Puzanov.
 #
 # This program can be used under the GNU General Public License version 2
 # You can find full information here: http://www.zenoss.com/oss
@@ -12,15 +12,15 @@ __doc__="""HPEVAStorageDiskEnclosure
 
 HPEVAStorageDiskEnclosure is an abstraction of a HPEVA_StorageDiskEnclosure
 
-$Id: HPEVAStorageDiskEnclosure.py,v 1.3 2010/06/30 17:10:07 egor Exp $"""
+$Id: HPEVAStorageDiskEnclosure.py,v 1.4 2011/02/28 20:49:30 egor Exp $"""
 
-__version__ = "$Revision: 1.3 $"[11:-2]
+__version__ = "$Revision: 1.4 $"[11:-2]
 
-from Globals import DTMLFile, InitializeClass
-from Products.ZenModel.HWComponent import *
-from Products.ZenRelations.RelSchema import *
+from Globals import InitializeClass
+from Products.ZenModel.HWComponent import HWComponent
+from Products.ZenRelations.RelSchema import ToOne, ToMany, ToManyCont
 from Products.ZenModel.ZenossSecurity import *
-from HPEVAComponent import *
+from HPEVAComponent import HPEVAComponent
 
 from Products.ZenUtils.Utils import convToUnits
 
@@ -113,6 +113,9 @@ class HPEVAStorageDiskEnclosure(HWComponent, HPEVAComponent):
 
 
     def layout(self):
+        """
+        Build Disk Enclosure layout
+        """
         bays = {}
         for disk in self.harddisks():
             bays[int(disk.bay)] = LINKTMPLT % ( disk.getPrimaryUrlPath(),

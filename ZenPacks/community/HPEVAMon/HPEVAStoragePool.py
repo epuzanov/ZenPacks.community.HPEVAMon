@@ -1,7 +1,7 @@
 ################################################################################
 #
 # This program is part of the HPEVAMon Zenpack for Zenoss.
-# Copyright (C) 2010 Egor Puzanov.
+# Copyright (C) 2010, 2011 Egor Puzanov.
 #
 # This program can be used under the GNU General Public License version 2
 # You can find full information here: http://www.zenoss.com/oss
@@ -12,15 +12,15 @@ __doc__="""HPEVAStoragePool
 
 HPEVAStoragePool is an abstraction of a HPEVA_StoragePool
 
-$Id: HPEVAStoragePool.py,v 1.4 2010/11/28 20:18:41 egor Exp $"""
+$Id: HPEVAStoragePool.py,v 1.5 2011/02/28 20:51:47 egor Exp $"""
 
-__version__ = "$Revision: 1.4 $"[11:-2]
+__version__ = "$Revision: 1.5 $"[11:-2]
 
-from Globals import DTMLFile, InitializeClass
-from Products.ZenModel.OSComponent import *
-from Products.ZenRelations.RelSchema import *
+from Globals import InitializeClass
+from Products.ZenModel.OSComponent import OSComponent
+from Products.ZenRelations.RelSchema import ToOne, ToMany, ToManyCont
 from Products.ZenModel.ZenossSecurity import *
-from HPEVAComponent import *
+from HPEVAComponent import HPEVAComponent
 
 from Products.ZenUtils.Utils import convToUnits
 
@@ -36,6 +36,7 @@ class HPEVAStoragePool(OSComponent, HPEVAComponent):
     totalManagedSpace = 0
     totalDisks = 0
     threshold = 0
+    groupId = 0
     state = "OK"
 
     _properties = OSComponent._properties + (
@@ -46,6 +47,7 @@ class HPEVAStoragePool(OSComponent, HPEVAComponent):
                  {'id':'totalManagedSpace', 'type':'int', 'mode':'w'},
                  {'id':'totalDisks', 'type':'int', 'mode':'w'},
                  {'id':'threshold', 'type':'int', 'mode':'w'},
+                 {'id':'groupId', 'type':'int', 'mode':'w'},
                  {'id':'state', 'type':'string', 'mode':'w'},
                 )
 
@@ -118,17 +120,22 @@ class HPEVAStoragePool(OSComponent, HPEVAComponent):
     def totalBytes(self):
         return self.totalManagedSpace or 0
 
+
     def usedBytes(self):
         return self.cacheRRDValue('Occupancy', 0)
+
 
     def totalBytesString(self):
         return convToUnits(self.totalBytes(), divby=1024)
 
+
     def usedBytesString(self):
         return convToUnits(self.usedBytes(), divby=1024)
 
+
     def availBytesString(self):
         return convToUnits((self.totalBytes() - self.usedBytes()), divby=1024)
+
 
     def capacity(self):
         """
@@ -139,13 +146,19 @@ class HPEVAStoragePool(OSComponent, HPEVAComponent):
             return int(100.0 * self.usedBytes() / self.totalBytes())
         return 'unknown'
 
+
     def disks(self):
+        """
+        Return total disks number
+        """
         return self.totalDisks or 0
+
 
     def getRRDNames(self):
         """
         Return the datapoint name of this StoragePool
         """
         return ['StoragePool_Occupancy']
+
 
 InitializeClass(HPEVAStoragePool)

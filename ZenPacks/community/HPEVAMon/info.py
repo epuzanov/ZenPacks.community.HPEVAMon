@@ -1,7 +1,7 @@
 ################################################################################
 #
 # This program is part of the HPEVAMon Zenpack for Zenoss.
-# Copyright (C) 2010 Egor Puzanov.
+# Copyright (C) 2010, 2011 Egor Puzanov.
 #
 # This program can be used under the GNU General Public License version 2
 # You can find full information here: http://www.zenoss.com/oss
@@ -12,9 +12,9 @@ __doc__="""info.py
 
 Representation of HPEVA components.
 
-$Id: info.py,v 1.2 2010/11/30 20:45:46 egor Exp $"""
+$Id: info.py,v 1.3 2011/02/28 21:01:06 egor Exp $"""
 
-__version__ = "$Revision: 1.2 $"[11:-2]
+__version__ = "$Revision: 1.3 $"[11:-2]
 
 from zope.interface import implements
 from Products.Zuul.infos import ProxyProperty
@@ -29,10 +29,17 @@ class HPEVADiskDriveInfo(ComponentInfo):
 
     serialNumber = ProxyProperty("serialNumber")
     diskType = ProxyProperty("diskType")
-    size = ProxyProperty("size")
     FWRev = ProxyProperty("FWRev")
     bay = ProxyProperty("bay")
     wwn = ProxyProperty("wwn")
+
+    @property
+    def size(self):
+        return convToUnits(self._object.size, divby=1000)
+
+    @property
+    def wwn(self):
+        return '-'.join([self._object.wwn[s*4:s*4+4] for s in range(4)])
 
     @property
     @info
@@ -76,7 +83,10 @@ class HPEVAHostFCPortInfo(ComponentInfo):
     type = ProxyProperty("type")
     description = ProxyProperty("description")
     mtu = ProxyProperty("mtu")
-    wwn = ProxyProperty("wwn")
+
+    @property
+    def wwn(self):
+        return '-'.join([self._object.wwn[s*4:s*4+4] for s in range(4)])
 
     @property
     def name(self):
