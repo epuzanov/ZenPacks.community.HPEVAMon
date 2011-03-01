@@ -12,9 +12,9 @@ __doc__="""HPEVAStoragePool
 
 HPEVAStoragePool is an abstraction of a HPEVA_StoragePool
 
-$Id: HPEVAStoragePool.py,v 1.5 2011/02/28 20:51:47 egor Exp $"""
+$Id: HPEVAStoragePool.py,v 1.6 2011/03/01 21:27:40 egor Exp $"""
 
-__version__ = "$Revision: 1.5 $"[11:-2]
+__version__ = "$Revision: 1.6 $"[11:-2]
 
 from Globals import InitializeClass
 from Products.ZenModel.OSComponent import OSComponent
@@ -36,7 +36,7 @@ class HPEVAStoragePool(OSComponent, HPEVAComponent):
     totalManagedSpace = 0
     totalDisks = 0
     threshold = 0
-    groupId = 0
+    groupId = "0"
     state = "OK"
 
     _properties = OSComponent._properties + (
@@ -47,7 +47,7 @@ class HPEVAStoragePool(OSComponent, HPEVAComponent):
                  {'id':'totalManagedSpace', 'type':'int', 'mode':'w'},
                  {'id':'totalDisks', 'type':'int', 'mode':'w'},
                  {'id':'threshold', 'type':'int', 'mode':'w'},
-                 {'id':'groupId', 'type':'int', 'mode':'w'},
+                 {'id':'groupId', 'type':'string', 'mode':'w'},
                  {'id':'state', 'type':'string', 'mode':'w'},
                 )
 

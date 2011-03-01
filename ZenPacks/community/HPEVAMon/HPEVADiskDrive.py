@@ -12,9 +12,9 @@ __doc__="""HPEVADiskDrive
 
 HPEVADiskDrive is an abstraction of a harddisk.
 
-$Id: HPEVADiskDrive.py,v 1.6 2011/02/28 20:47:31 egor Exp $"""
+$Id: HPEVADiskDrive.py,v 1.7 2011/03/01 21:27:11 egor Exp $"""
 
-__version__ = "$Revision: 1.6 $"[11:-2]
+__version__ = "$Revision: 1.7 $"[11:-2]
 
 from Globals import DTMLFile, InitializeClass
 from AccessControl import ClassSecurityInfo
@@ -131,11 +131,12 @@ class HPEVADiskDrive(HWComponent, HPEVAComponent):
     def setStoragePool(self, spid):
         """
         Set the storagepool relationship to the storage pool specified by the
-        given id.
+        given caption.
         """
-        spool=getattr(getattr(self.device().os,'storagepools',''),str(spid),'')
-        if spool: self.storagepool.addRelation(spool)
-        else: log.warn("storage pool id:%s not found", spid)
+        for spool in getattr(self.device().os, 'storagepools', (lambda:[]))():
+            if str(spid) == spool.caption:
+                self.storagepool.addRelation(spool)
+                break
 
 
     security.declareProtected(ZEN_VIEW, 'getStoragePool')

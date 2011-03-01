@@ -10,7 +10,7 @@
     tal:define="tableName string:hardDiskList;
     objects here/harddisks;
     tabletitle string:Hard Disks;
-    batch python:here.ZenTableManager.getBatch(tableName,objects,
+    batch python:here.ZenTableManager.getBatch(tableName,objects,batchSize=0,
                                             sortedHeader='bayString');"
     tal:condition="objects">
 <tal:block metal:use-macro="here/zenuimacros/macros/zentable">
@@ -56,12 +56,13 @@
       </td>
     </tr>
     </tal:block>
+<!--
     <tr>
         <td colspan="8" class="tableheader">
         <form metal:use-macro="here/zenTableNavigation/macros/navtool"></form>
         </td>
     </tr>
-
+-->
 <!-- END TABLE CONTENTS -->
 
 </tal:block>

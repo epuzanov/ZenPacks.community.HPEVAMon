@@ -1767,6 +1767,136 @@ Disk Group performance template for HP EVA Storage
 ZenPacks.community.HPEVAMon.HPEVAStoragePool
 </property>
 <tomanycont id='datasources'>
+<object id='StatisticalData' module='ZenPacks.community.WBEMDataSource.datasources.WBEMDataSource' class='WBEMDataSource'>
+<property select_variable="sourcetypes" type="selection" id="sourcetype" mode="w" >
+WBEM
+</property>
+<property type="boolean" id="enabled" mode="w" >
+True
+</property>
+<property type="int" id="severity" mode="w" >
+3
+</property>
+<property type="int" id="cycletime" mode="w" >
+300
+</property>
+<property type="string" id="namespace" mode="w" >
+root/eva
+</property>
+<property type="string" id="instance" mode="w" >
+HPEVA_DiskDriveStatisticalData.Description="EVA Disk level metrics for ${device/snmpSysName}",GroupId="${here/groupId}"
+</property>
+<tomanycont id='datapoints'>
+<object id='KBytesRead_sum' module='Products.ZenModel.RRDDataPoint' class='RRDDataPoint'>
+<property select_variable="rrdtypes" type="selection" id="rrdtype" mode="w" >
+DERIVE
+</property>
+<property type="boolean" id="isrow" mode="w" >
+True
+</property>
+<property type="string" id="rrdmin" mode="w" >
+0
+</property>
+<property type="string" id="description" mode="w" >
+DiskDrive performance template for HP EVA Storage
+</property>
+<tomanycont id='aliases'>
+<object id='KBytesRead' module='Products.ZenModel.RRDDataPointAlias' class='RRDDataPointAlias'>
+</object>
+</tomanycont>
+</object>
+<object id='KBytesWritten_sum' module='Products.ZenModel.RRDDataPoint' class='RRDDataPoint'>
+<property select_variable="rrdtypes" type="selection" id="rrdtype" mode="w" >
+DERIVE
+</property>
+<property type="boolean" id="isrow" mode="w" >
+True
+</property>
+<property type="string" id="rrdmin" mode="w" >
+0
+</property>
+<property type="string" id="description" mode="w" >
+DiskDrive performance template for HP EVA Storage
+</property>
+<tomanycont id='aliases'>
+<object id='KBytesWritten' module='Products.ZenModel.RRDDataPointAlias' class='RRDDataPointAlias'>
+</object>
+</tomanycont>
+</object>
+<object id='ReadIOs_sum' module='Products.ZenModel.RRDDataPoint' class='RRDDataPoint'>
+<property select_variable="rrdtypes" type="selection" id="rrdtype" mode="w" >
+DERIVE
+</property>
+<property type="boolean" id="isrow" mode="w" >
+True
+</property>
+<property type="string" id="rrdmin" mode="w" >
+0
+</property>
+<property type="string" id="description" mode="w" >
+DiskDrive performance template for HP EVA Storage
+</property>
+<tomanycont id='aliases'>
+<object id='ReadIOs' module='Products.ZenModel.RRDDataPointAlias' class='RRDDataPointAlias'>
+</object>
+</tomanycont>
+</object>
+<object id='ReadLatencyTime_sum' module='Products.ZenModel.RRDDataPoint' class='RRDDataPoint'>
+<property select_variable="rrdtypes" type="selection" id="rrdtype" mode="w" >
+DERIVE
+</property>
+<property type="boolean" id="isrow" mode="w" >
+True
+</property>
+<property type="string" id="rrdmin" mode="w" >
+0
+</property>
+<property type="string" id="description" mode="w" >
+DiskDrive performance template for HP EVA Storage
+</property>
+<tomanycont id='aliases'>
+<object id='ReadLatencyTime_ms' module='Products.ZenModel.RRDDataPointAlias' class='RRDDataPointAlias'>
+</object>
+</tomanycont>
+</object>
+<object id='WriteIOs_sum' module='Products.ZenModel.RRDDataPoint' class='RRDDataPoint'>
+<property select_variable="rrdtypes" type="selection" id="rrdtype" mode="w" >
+DERIVE
+</property>
+<property type="boolean" id="isrow" mode="w" >
+True
+</property>
+<property type="string" id="rrdmin" mode="w" >
+0
+</property>
+<property type="string" id="description" mode="w" >
+DiskDrive performance template for HP EVA Storage
+</property>
+<tomanycont id='aliases'>
+<object id='WriteIOs' module='Products.ZenModel.RRDDataPointAlias' class='RRDDataPointAlias'>
+</object>
+</tomanycont>
+</object>
+<object id='WriteLatencyTime_sum' module='Products.ZenModel.RRDDataPoint' class='RRDDataPoint'>
+<property select_variable="rrdtypes" type="selection" id="rrdtype" mode="w" >
+DERIVE
+</property>
+<property type="boolean" id="isrow" mode="w" >
+True
+</property>
+<property type="string" id="rrdmin" mode="w" >
+0
+</property>
+<property type="string" id="description" mode="w" >
+DiskDrive performance template for HP EVA Storage
+</property>
+<tomanycont id='aliases'>
+<object id='WriteLatencyTime_ms' module='Products.ZenModel.RRDDataPointAlias' class='RRDDataPointAlias'>
+</object>
+</tomanycont>
+</object>
+</tomanycont>
+</object>
 <object id='StoragePool' module='ZenPacks.community.WBEMDataSource.datasources.WBEMDataSource' class='WBEMDataSource'>
 <property select_variable="sourcetypes" type="selection" id="sourcetype" mode="w" >
 WBEM
@@ -1915,6 +2045,276 @@ ${graphPoint/id}
 </property>
 <property type="string" id="dpName" mode="w" >
 StoragePool_TotalDisks
+</property>
+<property type="string" id="cFunc" mode="w" >
+AVERAGE
+</property>
+</object>
+</tomanycont>
+</object>
+<object id='IO Bytes' module='Products.ZenModel.GraphDefinition' class='GraphDefinition'>
+<property type="int" id="height" mode="w" >
+100
+</property>
+<property type="int" id="width" mode="w" >
+500
+</property>
+<property type="string" id="units" mode="w" >
+bytes/sec
+</property>
+<property type="boolean" id="log" mode="w" >
+False
+</property>
+<property type="boolean" id="base" mode="w" >
+True
+</property>
+<property type="int" id="miny" mode="w" >
+-1
+</property>
+<property type="int" id="maxy" mode="w" >
+-1
+</property>
+<property type="boolean" id="hasSummary" mode="w" >
+True
+</property>
+<property type="long" id="sequence" mode="w" >
+2
+</property>
+<tomanycont id='graphPoints'>
+<object id='KBytesRead' module='Products.ZenModel.DataPointGraphPoint' class='DataPointGraphPoint'>
+<property select_variable="lineTypes" type="selection" id="lineType" mode="w" >
+AREA
+</property>
+<property type="long" id="lineWidth" mode="w" >
+1
+</property>
+<property type="boolean" id="stacked" mode="w" >
+False
+</property>
+<property type="string" id="format" mode="w" >
+%5.2lf%s
+</property>
+<property type="string" id="legend" mode="w" >
+Read
+</property>
+<property type="long" id="limit" mode="w" >
+-1
+</property>
+<property type="string" id="rpn" mode="w" >
+1024,*
+</property>
+<property type="string" id="dpName" mode="w" >
+StatisticalData_KBytesRead_sum
+</property>
+<property type="string" id="cFunc" mode="w" >
+AVERAGE
+</property>
+</object>
+<object id='KBytesWritten' module='Products.ZenModel.DataPointGraphPoint' class='DataPointGraphPoint'>
+<property type="long" id="sequence" mode="w" >
+1
+</property>
+<property select_variable="lineTypes" type="selection" id="lineType" mode="w" >
+LINE
+</property>
+<property type="long" id="lineWidth" mode="w" >
+1
+</property>
+<property type="boolean" id="stacked" mode="w" >
+False
+</property>
+<property type="string" id="format" mode="w" >
+%5.2lf%s
+</property>
+<property type="string" id="legend" mode="w" >
+Write
+</property>
+<property type="long" id="limit" mode="w" >
+-1
+</property>
+<property type="string" id="rpn" mode="w" >
+1024,*
+</property>
+<property type="string" id="dpName" mode="w" >
+StatisticalData_KBytesWritten_sum
+</property>
+<property type="string" id="cFunc" mode="w" >
+AVERAGE
+</property>
+</object>
+</tomanycont>
+</object>
+<object id='IO Requests' module='Products.ZenModel.GraphDefinition' class='GraphDefinition'>
+<property type="int" id="height" mode="w" >
+100
+</property>
+<property type="int" id="width" mode="w" >
+500
+</property>
+<property type="string" id="units" mode="w" >
+requests/sec
+</property>
+<property type="boolean" id="log" mode="w" >
+False
+</property>
+<property type="boolean" id="base" mode="w" >
+False
+</property>
+<property type="int" id="miny" mode="w" >
+-1
+</property>
+<property type="int" id="maxy" mode="w" >
+-1
+</property>
+<property type="boolean" id="hasSummary" mode="w" >
+True
+</property>
+<property type="long" id="sequence" mode="w" >
+3
+</property>
+<tomanycont id='graphPoints'>
+<object id='ReadIOs' module='Products.ZenModel.DataPointGraphPoint' class='DataPointGraphPoint'>
+<property select_variable="lineTypes" type="selection" id="lineType" mode="w" >
+AREA
+</property>
+<property type="long" id="lineWidth" mode="w" >
+1
+</property>
+<property type="boolean" id="stacked" mode="w" >
+False
+</property>
+<property type="string" id="format" mode="w" >
+%5.2lf%s
+</property>
+<property type="string" id="legend" mode="w" >
+Read
+</property>
+<property type="long" id="limit" mode="w" >
+-1
+</property>
+<property type="string" id="dpName" mode="w" >
+StatisticalData_ReadIOs_sum
+</property>
+<property type="string" id="cFunc" mode="w" >
+AVERAGE
+</property>
+</object>
+<object id='WriteIOs' module='Products.ZenModel.DataPointGraphPoint' class='DataPointGraphPoint'>
+<property type="long" id="sequence" mode="w" >
+1
+</property>
+<property select_variable="lineTypes" type="selection" id="lineType" mode="w" >
+LINE
+</property>
+<property type="long" id="lineWidth" mode="w" >
+1
+</property>
+<property type="boolean" id="stacked" mode="w" >
+False
+</property>
+<property type="string" id="format" mode="w" >
+%5.2lf%s
+</property>
+<property type="string" id="legend" mode="w" >
+Write
+</property>
+<property type="long" id="limit" mode="w" >
+-1
+</property>
+<property type="string" id="dpName" mode="w" >
+StatisticalData_WriteIOs_sum
+</property>
+<property type="string" id="cFunc" mode="w" >
+AVERAGE
+</property>
+</object>
+</tomanycont>
+</object>
+<object id='Latency' module='Products.ZenModel.GraphDefinition' class='GraphDefinition'>
+<property type="int" id="height" mode="w" >
+100
+</property>
+<property type="int" id="width" mode="w" >
+500
+</property>
+<property type="string" id="units" mode="w" >
+seconds
+</property>
+<property type="boolean" id="log" mode="w" >
+False
+</property>
+<property type="boolean" id="base" mode="w" >
+False
+</property>
+<property type="int" id="miny" mode="w" >
+-1
+</property>
+<property type="int" id="maxy" mode="w" >
+-1
+</property>
+<property type="boolean" id="hasSummary" mode="w" >
+True
+</property>
+<property type="long" id="sequence" mode="w" >
+4
+</property>
+<tomanycont id='graphPoints'>
+<object id='ReadLatencyTime' module='Products.ZenModel.DataPointGraphPoint' class='DataPointGraphPoint'>
+<property select_variable="lineTypes" type="selection" id="lineType" mode="w" >
+AREA
+</property>
+<property type="long" id="lineWidth" mode="w" >
+1
+</property>
+<property type="boolean" id="stacked" mode="w" >
+False
+</property>
+<property type="string" id="format" mode="w" >
+%5.2lf%s
+</property>
+<property type="string" id="legend" mode="w" >
+Read
+</property>
+<property type="long" id="limit" mode="w" >
+-1
+</property>
+<property type="string" id="rpn" mode="w" >
+${here/totalDisks},/,100000,/
+</property>
+<property type="string" id="dpName" mode="w" >
+StatisticalData_ReadLatencyTime_sum
+</property>
+<property type="string" id="cFunc" mode="w" >
+AVERAGE
+</property>
+</object>
+<object id='WriteLatencyTime' module='Products.ZenModel.DataPointGraphPoint' class='DataPointGraphPoint'>
+<property type="long" id="sequence" mode="w" >
+1
+</property>
+<property select_variable="lineTypes" type="selection" id="lineType" mode="w" >
+LINE
+</property>
+<property type="long" id="lineWidth" mode="w" >
+1
+</property>
+<property type="boolean" id="stacked" mode="w" >
+False
+</property>
+<property type="string" id="format" mode="w" >
+%5.2lf%s
+</property>
+<property type="string" id="legend" mode="w" >
+Write
+</property>
+<property type="long" id="limit" mode="w" >
+-1
+</property>
+<property type="string" id="rpn" mode="w" >
+${here/totalDisks},/,100000,/
+</property>
+<property type="string" id="dpName" mode="w" >
+StatisticalData_WriteLatencyTime_sum
 </property>
 <property type="string" id="cFunc" mode="w" >
 AVERAGE

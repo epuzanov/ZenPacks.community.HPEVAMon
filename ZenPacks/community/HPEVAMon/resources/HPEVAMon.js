@@ -93,7 +93,7 @@ ZC.HPEVADiskDrivePanel = Ext.extend(ZC.ComponentGridPanel, {
                 id: 'size',
                 dataIndex: 'size',
                 header: _t('Size'),
-                renderer: Zenoss.render.bytesString
+                width: 60
             },{
                 id: 'monitor',
                 dataIndex: 'monitor',
@@ -311,7 +311,7 @@ ZC.HPEVAStoragePoolPanel = Ext.extend(ZC.ComponentGridPanel, {
             },{
                 id: 'capacity',
                 dataIndex: 'capacity',
-                header: _t('% Util')
+                header: _t('Utilization')
             },{
                 id: 'monitor',
                 dataIndex: 'monitor',

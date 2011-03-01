@@ -12,9 +12,9 @@ __doc__="""info.py
 
 Representation of HPEVA components.
 
-$Id: info.py,v 1.3 2011/02/28 21:01:06 egor Exp $"""
+$Id: info.py,v 1.4 2011/03/01 21:28:05 egor Exp $"""
 
-__version__ = "$Revision: 1.3 $"[11:-2]
+__version__ = "$Revision: 1.4 $"[11:-2]
 
 from zope.interface import implements
 from Products.Zuul.infos import ProxyProperty
@@ -31,7 +31,6 @@ class HPEVADiskDriveInfo(ComponentInfo):
     diskType = ProxyProperty("diskType")
     FWRev = ProxyProperty("FWRev")
     bay = ProxyProperty("bay")
-    wwn = ProxyProperty("wwn")
 
     @property
     def size(self):
@@ -152,7 +151,10 @@ class HPEVAStoragePoolInfo(ComponentInfo):
 
     @property
     def capacity(self):
-        return self._object.capacity()
+        capacity = self._object.capacity()
+        if str(capacity).isdigit():
+            capacity = '%s%%'%capacity
+        return capacity
 
     @property
     def status(self):

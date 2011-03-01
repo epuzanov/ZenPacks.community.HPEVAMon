@@ -12,9 +12,9 @@ __doc__="""interfaces
 
 describes the form field to the user interface.
 
-$Id: interfaces.py,v 1.3 2011/02/28 21:00:30 egor Exp $"""
+$Id: interfaces.py,v 1.4 2011/03/01 21:29:17 egor Exp $"""
 
-__version__ = "$Revision: 1.3 $"[11:-2]
+__version__ = "$Revision: 1.4 $"[11:-2]
 
 from Products.Zuul.interfaces import IComponentInfo
 from Products.Zuul.form import schema
@@ -83,8 +83,7 @@ class IHPEVAStoragePoolInfo(IComponentInfo):
                                                                 group="Details")
     availBytesString = schema.Text(title=u"Available Bytes", readonly=True,
                                                                 group="Details")
-    capacity = schema.Text(title=u"Capacity Bytes", readonly=True,
-                                                                group="Details")
+    capacity = schema.Text(title=u"Utilization", readonly=True, group="Details")
 
 class IHPEVAStorageProcessorCardInfo(IComponentInfo):
     """

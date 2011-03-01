@@ -1,7 +1,7 @@
 ################################################################################
 #
 # This program is part of the HPEVAMon Zenpack for Zenoss.
-# Copyright (C) 2010 Egor Puzanov.
+# Copyright (C) 2010, 2011 Egor Puzanov.
 #
 # This program can be used under the GNU General Public License version 2
 # You can find full information here: http://www.zenoss.com/oss
@@ -13,9 +13,9 @@ __doc__="""HPEVAStoragePoolMap
 HPEVAStoragePoolMap maps HPEVA_StoragePool class to
 HPEVAStoragePool class.
 
-$Id: HPEVA_StoragePoolMap.py,v 1.3 2010/10/15 20:59:51 egor Exp $"""
+$Id: HPEVA_StoragePoolMap.py,v 1.4 2011/03/01 21:30:11 egor Exp $"""
 
-__version__ = '$Revision: 1.3 $'[11:-2]
+__version__ = '$Revision: 1.4 $'[11:-2]
 
 
 from ZenPacks.community.WBEMDataSource.WBEMPlugin import WBEMPlugin
@@ -60,6 +60,7 @@ class HPEVAStoragePoolMap(WBEMPlugin):
             if instance["id"].endswith('.Ungrouped Disks'): continue
             try:
                 om = self.objectMap(instance)
+                om.groupId = om.id[17:19].lstrip('0') or '0'
                 om.id = self.prepId(om.id)
                 if type(om.threshold) is not int: om.threshold = 90
             except AttributeError:
