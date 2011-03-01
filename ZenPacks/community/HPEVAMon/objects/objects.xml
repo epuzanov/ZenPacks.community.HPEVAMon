@@ -1383,7 +1383,7 @@ False
 True
 </property>
 <property type="int" id="miny" mode="w" >
--1
+0
 </property>
 <property type="int" id="maxy" mode="w" >
 -1
@@ -1472,7 +1472,7 @@ False
 False
 </property>
 <property type="int" id="miny" mode="w" >
--1
+0
 </property>
 <property type="int" id="maxy" mode="w" >
 -1
@@ -1558,7 +1558,7 @@ False
 False
 </property>
 <property type="int" id="miny" mode="w" >
--1
+0
 </property>
 <property type="int" id="maxy" mode="w" >
 -1
@@ -1797,7 +1797,7 @@ True
 <property type="string" id="rrdmin" mode="w" >
 0
 </property>
-<property type="string" id="description" mode="w" >
+<property visible="True" type="string" id="description" >
 DiskDrive performance template for HP EVA Storage
 </property>
 <tomanycont id='aliases'>
@@ -1815,7 +1815,7 @@ True
 <property type="string" id="rrdmin" mode="w" >
 0
 </property>
-<property type="string" id="description" mode="w" >
+<property visible="True" type="string" id="description" >
 DiskDrive performance template for HP EVA Storage
 </property>
 <tomanycont id='aliases'>
@@ -1833,7 +1833,7 @@ True
 <property type="string" id="rrdmin" mode="w" >
 0
 </property>
-<property type="string" id="description" mode="w" >
+<property visible="True" type="string" id="description" >
 DiskDrive performance template for HP EVA Storage
 </property>
 <tomanycont id='aliases'>
@@ -1851,7 +1851,7 @@ True
 <property type="string" id="rrdmin" mode="w" >
 0
 </property>
-<property type="string" id="description" mode="w" >
+<property visible="True" type="string" id="description" >
 DiskDrive performance template for HP EVA Storage
 </property>
 <tomanycont id='aliases'>
@@ -1869,7 +1869,7 @@ True
 <property type="string" id="rrdmin" mode="w" >
 0
 </property>
-<property type="string" id="description" mode="w" >
+<property visible="True" type="string" id="description" >
 DiskDrive performance template for HP EVA Storage
 </property>
 <tomanycont id='aliases'>
@@ -1887,7 +1887,7 @@ True
 <property type="string" id="rrdmin" mode="w" >
 0
 </property>
-<property type="string" id="description" mode="w" >
+<property visible="True" type="string" id="description" >
 DiskDrive performance template for HP EVA Storage
 </property>
 <tomanycont id='aliases'>
@@ -2069,7 +2069,7 @@ False
 True
 </property>
 <property type="int" id="miny" mode="w" >
--1
+0
 </property>
 <property type="int" id="maxy" mode="w" >
 -1
@@ -2161,7 +2161,7 @@ False
 False
 </property>
 <property type="int" id="miny" mode="w" >
--1
+0
 </property>
 <property type="int" id="maxy" mode="w" >
 -1
@@ -2247,7 +2247,7 @@ False
 False
 </property>
 <property type="int" id="miny" mode="w" >
--1
+0
 </property>
 <property type="int" id="maxy" mode="w" >
 -1
@@ -2754,7 +2754,7 @@ False
 True
 </property>
 <property type="int" id="miny" mode="w" >
--1
+0
 </property>
 <property type="int" id="maxy" mode="w" >
 -1
@@ -2846,7 +2846,7 @@ False
 False
 </property>
 <property type="int" id="miny" mode="w" >
--1
+0
 </property>
 <property type="int" id="maxy" mode="w" >
 -1
@@ -2932,7 +2932,7 @@ False
 False
 </property>
 <property type="int" id="miny" mode="w" >
--1
+0
 </property>
 <property type="int" id="maxy" mode="w" >
 -1
@@ -3238,7 +3238,7 @@ False
 True
 </property>
 <property type="int" id="miny" mode="w" >
--1
+0
 </property>
 <property type="int" id="maxy" mode="w" >
 -1
@@ -3423,7 +3423,7 @@ False
 False
 </property>
 <property type="int" id="miny" mode="w" >
--1
+0
 </property>
 <property type="int" id="maxy" mode="w" >
 -1
