@@ -63,7 +63,7 @@
             <a class="tablevalues" tal:attributes="href comp/getPrimaryUrlPath"
                 tal:content="comp/description">smtp</a>
         </td>
-        <td class="tablevalues" tal:content="comp/wwn"/>
+        <td class="tablevalues" tal:content="comp/wwnString"/>
         <td class="tablevalues" tal:content="structure comp/getProductLink"/>
         <td class="tablevalues" tal:content="comp/sizeString"/>
         <td class="tablevalues" tal:content="comp/diskType"/>

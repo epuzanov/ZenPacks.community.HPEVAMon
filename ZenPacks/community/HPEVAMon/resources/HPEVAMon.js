@@ -460,10 +460,6 @@ ZC.HPEVAStorageVolumePanel = Ext.extend(ZC.ComponentGridPanel, {
                 dataIndex: 'totalBytesString',
                 header: _t('Size')
             },{
-                id: 'totalBytesString',
-                dataIndex: 'totalBytesString',
-                header: _t('Size')
-            },{
                 id: 'monitor',
                 dataIndex: 'monitor',
                 header: _t('Monitored'),
