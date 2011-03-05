@@ -43,7 +43,8 @@ ZC.HPEVADiskDrivePanel = Ext.extend(ZC.ComponentGridPanel, {
                 {name: 'manufacturer'},
                 {name: 'product'},
                 {name: 'serialNumber'},
-                {name: 'hasMonitor'},
+                {name: 'usesMonitorAttribute'},
+                {name: 'monitored'},
                 {name: 'monitor'}
             ],
             columns: [{
@@ -95,10 +96,9 @@ ZC.HPEVADiskDrivePanel = Ext.extend(ZC.ComponentGridPanel, {
                 header: _t('Size'),
                 width: 60
             },{
-                id: 'monitor',
-                dataIndex: 'monitor',
+                id: 'monitored',
+                dataIndex: 'monitored',
                 header: _t('Monitored'),
-                renderer: Zenoss.render.monitor,
                 width: 60
             },{
                 id: 'status',
@@ -129,7 +129,8 @@ ZC.HPEVAFCPortPanel = Ext.extend(ZC.ComponentGridPanel, {
                 {name: 'linkTechnology'},
                 {name: 'type'},
                 {name: 'speed'},
-                {name: 'hasMonitor'},
+                {name: 'usesMonitorAttribute'},
+                {name: 'monitored'},
                 {name: 'monitor'}
             ],
             columns: [{
@@ -173,10 +174,9 @@ ZC.HPEVAFCPortPanel = Ext.extend(ZC.ComponentGridPanel, {
                 dataIndex: 'speed',
                 header: _t('Speed')
             },{
-                id: 'monitor',
-                dataIndex: 'monitor',
+                id: 'monitored',
+                dataIndex: 'monitored',
                 header: _t('Monitored'),
-                renderer: Zenoss.render.monitor,
                 width: 60
             },{
                 id: 'status',
@@ -204,7 +204,8 @@ ZC.HPEVAStorageDiskEnclosurePanel = Ext.extend(ZC.ComponentGridPanel, {
                 {name: 'name'},
                 {name: 'manufacturer'},
                 {name: 'product'},
-                {name: 'hasMonitor'},
+                {name: 'usesMonitorAttribute'},
+                {name: 'monitored'},
                 {name: 'monitor'}
             ],
             columns: [{
@@ -230,10 +231,9 @@ ZC.HPEVAStorageDiskEnclosurePanel = Ext.extend(ZC.ComponentGridPanel, {
                 header: _t('Model'),
                 renderer: render_link
             },{
-                id: 'monitor',
-                dataIndex: 'monitor',
+                id: 'monitored',
+                dataIndex: 'monitored',
                 header: _t('Monitored'),
-                renderer: Zenoss.render.monitor,
                 width: 60
             },{
                 id: 'status',
@@ -266,7 +266,8 @@ ZC.HPEVAStoragePoolPanel = Ext.extend(ZC.ComponentGridPanel, {
                 {name: 'usedBytesString'},
                 {name: 'availBytesString'},
                 {name: 'capacity'},
-                {name: 'hasMonitor'},
+                {name: 'usesMonitorAttribute'},
+                {name: 'monitored'},
                 {name: 'monitor'}
             ],
             columns: [{
@@ -313,10 +314,9 @@ ZC.HPEVAStoragePoolPanel = Ext.extend(ZC.ComponentGridPanel, {
                 dataIndex: 'capacity',
                 header: _t('Utilization')
             },{
-                id: 'monitor',
-                dataIndex: 'monitor',
+                id: 'monitored',
+                dataIndex: 'monitored',
                 header: _t('Monitored'),
-                renderer: Zenoss.render.monitor,
                 width: 60
             },{
                 id: 'status',
@@ -346,7 +346,8 @@ ZC.HPEVAStorageProcessorCardPanel = Ext.extend(ZC.ComponentGridPanel, {
                 {name: 'product'},
                 {name: 'serialNumber'},
                 {name: 'uptime'},
-                {name: 'hasMonitor'},
+                {name: 'usesMonitorAttribute'},
+                {name: 'monitored'},
                 {name: 'monitor'}
             ],
             columns: [{
@@ -385,10 +386,9 @@ ZC.HPEVAStorageProcessorCardPanel = Ext.extend(ZC.ComponentGridPanel, {
                 dataIndex: 'uptime',
                 header: _t('Uptime')
             },{
-                id: 'monitor',
-                dataIndex: 'monitor',
+                id: 'monitored',
+                dataIndex: 'monitored',
                 header: _t('Monitored'),
-                renderer: Zenoss.render.monitor,
                 width: 60
             },{
                 id: 'status',
@@ -419,7 +419,8 @@ ZC.HPEVAStorageVolumePanel = Ext.extend(ZC.ComponentGridPanel, {
                 {name: 'preferredPath'},
                 {name: 'accessType'},
                 {name: 'totalBytesString'},
-                {name: 'hasMonitor'},
+                {name: 'usesMonitorAttribute'},
+                {name: 'monitored'},
                 {name: 'monitor'}
             ],
             columns: [{
@@ -460,10 +461,9 @@ ZC.HPEVAStorageVolumePanel = Ext.extend(ZC.ComponentGridPanel, {
                 dataIndex: 'totalBytesString',
                 header: _t('Size')
             },{
-                id: 'monitor',
-                dataIndex: 'monitor',
+                id: 'monitored',
+                dataIndex: 'monitored',
                 header: _t('Monitored'),
-                renderer: Zenoss.render.monitor,
                 width: 60
             },{
                 id: 'status',
@@ -493,7 +493,8 @@ ZC.HPEVAConsistencySetPanel = Ext.extend(ZC.ComponentGridPanel, {
                 {name: 'remoteCellName'},
                 {name: 'storagePool'},
                 {name: 'currentPercentLogLevel'},
-                {name: 'hasMonitor'},
+                {name: 'usesMonitorAttribute'},
+                {name: 'monitored'},
                 {name: 'monitor'}
             ],
             columns: [{
@@ -532,10 +533,9 @@ ZC.HPEVAConsistencySetPanel = Ext.extend(ZC.ComponentGridPanel, {
                 dataIndex: 'remoteCellName',
                 header: _t('Remote System')
             },{
-                id: 'monitor',
-                dataIndex: 'monitor',
+                id: 'monitored',
+                dataIndex: 'monitored',
                 header: _t('Monitored'),
-                renderer: Zenoss.render.monitor,
                 width: 60
             },{
                 id: 'status',
