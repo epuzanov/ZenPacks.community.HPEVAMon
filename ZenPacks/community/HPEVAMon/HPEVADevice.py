@@ -12,15 +12,16 @@ __doc__="""HPEVADevice
 
 HPEVADevice is an abstraction of a HP EVA
 
-$Id: HPEVADevice.py,v 1.3 2011/02/28 20:27:37 egor Exp $"""
+$Id: HPEVADevice.py,v 1.4 2011/03/29 23:11:17 egor Exp $"""
 
-__version__ = "$Revision: 1.3 $"[11:-2]
+__version__ = "$Revision: 1.4 $"[11:-2]
 
 from Globals import InitializeClass
 from Products.ZenModel.ZenossSecurity import ZEN_VIEW, ZEN_CHANGE_DEVICE
 from Products.ZenModel.Device import Device
 from Products.ZenModel.ManagedEntity import ManagedEntity
 from Products.ZenModel.ZenStatus import ZenStatus
+from Products.ZenModel.ZVersion import VERSION
 from ZenPacks.community.HPEVAMon.HPEVADeviceHW import HPEVADeviceHW
 from ZenPacks.community.HPEVAMon.HPEVADeviceOS import HPEVADeviceOS
 
@@ -45,7 +46,7 @@ class HPEVADevice(Device):
             (
                 { 'id'            : 'status'
                 , 'name'          : 'Status'
-                , 'action'        : 'deviceStatus'
+                , 'action': VERSION < '2.6' and 'deviceStatus' or 'devicedetail'
                 , 'permissions'   : (ZEN_VIEW, )
                 },
                 { 'id'            : 'osdetail'
