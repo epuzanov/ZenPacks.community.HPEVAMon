@@ -1,7 +1,7 @@
 ################################################################################
 #
 # This program is part of the HPEVAMon Zenpack for Zenoss.
-# Copyright (C) 2010 Egor Puzanov.
+# Copyright (C) 2010, 2011 Egor Puzanov.
 #
 # This program can be used under the GNU General Public License version 2
 # You can find full information here: http://www.zenoss.com/oss
@@ -13,9 +13,9 @@ __doc__="""HPEVAStorageVolumeMap
 HPEVAStorageVolumeMap maps HPEVA_StorageVolume class to
 HPEVAStorageVolume class.
 
-$Id: HPEVA_StorageVolumeMap.py,v 1.3 2010/11/28 13:24:20 egor Exp $"""
+$Id: HPEVA_StorageVolumeMap.py,v 1.4 2011/06/03 21:51:34 egor Exp $"""
 
-__version__ = '$Revision: 1.3 $'[11:-2]
+__version__ = '$Revision: 1.4 $'[11:-2]
 
 
 from ZenPacks.community.WBEMDataSource.WBEMPlugin import WBEMPlugin
@@ -67,6 +67,13 @@ class HPEVAStorageVolumeMap(WBEMPlugin):
                 ),
             }
 
+    accessTypes = {
+        0: "Unknown",
+        1: "Readable",
+        2: "Writable",
+        3: "Read/Write Supported",
+        4: "Write Once",
+    }
 
     def process(self, device, results, log):
         """collect WBEM information from this device"""
@@ -86,6 +93,8 @@ class HPEVAStorageVolumeMap(WBEMPlugin):
                 om = self.objectMap(instance)
                 om.id = self.prepId("%s.%s"%(om._sname, om.id))
                 om.setStoragePool = "%s.%s"%(om._sname, om.setStoragePool)
+                om.accessType = self.accessTypes.get(getattr(om, "accessType",
+                                                                0), "Unknown")
                 if om._did in drgroups: om.setDRGroup = drgroups[om._did]
             except AttributeError:
                 continue
