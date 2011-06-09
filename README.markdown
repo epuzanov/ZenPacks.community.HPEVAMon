@@ -8,8 +8,9 @@ __/Devices/CIM/HPEVA__ Device Class for monitoring these storage devices.
 ## Requirements
 
 ### Zenoss
-You must first have, or install, Zenoss 2.5.2 or later. Core and Enterprise
-versions are supported. You can download the free Core version of Zenoss from
+You must first have, or install, Zenoss 2.5.2 or later. This ZenPack was
+tested against Zenoss 2.5.2 and Zenoss 3.1.0. You can download
+the free Core version of Zenoss from
 <http://community.zenoss.org/community/download>.
 
 ### ZenPacks

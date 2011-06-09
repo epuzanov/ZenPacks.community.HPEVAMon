@@ -12,9 +12,9 @@ __doc__="""HPEVAHostFCPortMap
 
 HPEVAHostFCPortMap maps HPEVA_HostFCPort class to HPEVAHostFCPort class.
 
-$Id: HPEVA_HostFCPortMap.py,v 1.3 2011/06/03 21:49:18 egor Exp $"""
+$Id: HPEVA_HostFCPortMap.py,v 1.4 2011/06/09 18:46:33 egor Exp $"""
 
-__version__ = '$Revision: 1.3 $'[11:-2]
+__version__ = '$Revision: 1.4 $'[11:-2]
 
 
 from ZenPacks.community.WBEMDataSource.WBEMPlugin import WBEMPlugin
@@ -123,7 +123,7 @@ class HPEVAHostFCPortMap(WBEMPlugin):
                 om = self.objectMap(instance)
                 om.id = self.prepId(om.id)
                 if om._ccn == 'HPEVA_DiskFCPort':
-                    self.modname = "ZenPacks.community.HPEVAMon.HPEVADiskFCPort"
+                    om.modname = "ZenPacks.community.HPEVAMon.HPEVADiskFCPort"
                 if om.setController: om.setController = om.setController.strip()
                 if om.interfaceName:om.interfaceName=om.interfaceName.split()[-1]
                 om.type = self.portTypes.get(getattr(om, "type", 0), "Unknown")
