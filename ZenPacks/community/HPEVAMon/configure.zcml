@@ -1,58 +1,23 @@
 <?xml version="1.0" encoding="utf-8"?>
 <configure xmlns="http://namespaces.zope.org/zope"
-           xmlns:browser="http://namespaces.zope.org/browser"
            xmlns:zcml="http://namespaces.zope.org/zcml">
 
     <configure zcml:condition="installed Products.Zuul">
 
-        <adapter factory=".info.HPEVADiskDriveInfo"
-                 for=".HPEVADiskDrive.HPEVADiskDrive"
-                 provides=".interfaces.IHPEVADiskDriveInfo"
-                 />
-
-        <adapter factory=".info.HPEVAHostFCPortInfo"
-                 for=".HPEVAHostFCPort.HPEVAHostFCPort"
-                 provides=".interfaces.IHPEVAHostFCPortInfo"
-                 />
-
-        <adapter factory=".info.HPEVAStorageDiskEnclosureInfo"
-                 for=".HPEVAStorageDiskEnclosure.HPEVAStorageDiskEnclosure"
-                 provides=".interfaces.IHPEVAStorageDiskEnclosureInfo"
-                 />
-
-        <adapter factory=".info.HPEVAStoragePoolInfo"
-                 for=".HPEVAStoragePool.HPEVAStoragePool"
+        <adapter factory=".info.HPEVA_StoragePoolInfo"
+                 for=".HPEVA_StoragePool.HPEVA_StoragePool"
                  provides=".interfaces.IHPEVAStoragePoolInfo"
                  />
 
-        <adapter factory=".info.HPEVAStorageProcessorCardInfo"
-                 for=".HPEVAStorageProcessorCard.HPEVAStorageProcessorCard"
-                 provides=".interfaces.IHPEVAStorageProcessorCardInfo"
-                 />
-
-        <adapter factory=".info.HPEVAStorageVolumeInfo"
-                 for=".HPEVAStorageVolume.HPEVAStorageVolume"
+        <adapter factory=".info.HPEVA_StorageVolumeInfo"
+                 for=".HPEVA_StorageVolume.HPEVA_StorageVolume"
                  provides=".interfaces.IHPEVAStorageVolumeInfo"
                  />
 
-        <adapter factory=".info.HPEVAConsistencySetInfo"
-                 for=".HPEVAConsistencySet.HPEVAConsistencySet"
+        <adapter factory=".info.HPEVA_ConsistencySetInfo"
+                 for=".HPEVA_ConsistencySet.HPEVA_ConsistencySet"
                  provides=".interfaces.IHPEVAConsistencySetInfo"
                  />
 
-        <browser:resourceDirectory
-                 name="hpevamon"
-                 directory="resources"
-                 />
-
-        <browser:viewlet
-                 name="js-hpevamon"
-                 for=".HPEVADevice.HPEVADevice"
-                 paths="/++resource++hpevamon/HPEVAMon.js"
-                 weight="10"
-                 manager="Products.ZenUI3.browser.interfaces.IJavaScriptSrcManager"
-                 class="Products.ZenUI3.browser.javascript.JavaScriptSrcBundleViewlet"
-                 permission="zope2.Public"
-                 />
     </configure>
 </configure>

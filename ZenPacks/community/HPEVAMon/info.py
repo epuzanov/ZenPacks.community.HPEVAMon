@@ -1,7 +1,7 @@
 ################################################################################
 #
 # This program is part of the HPEVAMon Zenpack for Zenoss.
-# Copyright (C) 2010, 2011 Egor Puzanov.
+# Copyright (C) 2010-2012 Egor Puzanov.
 #
 # This program can be used under the GNU General Public License version 2
 # You can find full information here: http://www.zenoss.com/oss
@@ -12,217 +12,36 @@ __doc__="""info.py
 
 Representation of HPEVA components.
 
-$Id: info.py,v 1.4 2011/03/01 21:28:05 egor Exp $"""
+$Id: info.py,v 1.5 2012/06/22 00:01:01 egor Exp $"""
 
-__version__ = "$Revision: 1.4 $"[11:-2]
+__version__ = "$Revision: 1.5 $"[11:-2]
 
 from zope.interface import implements
 from Products.Zuul.infos import ProxyProperty
-from Products.Zuul.infos.component import ComponentInfo
 from Products.Zuul.decorators import info
 from Products.ZenUtils.Utils import convToUnits
+from ZenPacks.community.CIMMon.info import  StoragePoolInfo,\
+                                            StorageVolumeInfo,\
+                                            CollectionInfo
 from ZenPacks.community.HPEVAMon import interfaces
 
 
-class HPEVADiskDriveInfo(ComponentInfo):
-    implements(interfaces.IHPEVADiskDriveInfo)
-
-    serialNumber = ProxyProperty("serialNumber")
-    diskType = ProxyProperty("diskType")
-    FWRev = ProxyProperty("FWRev")
-    bay = ProxyProperty("bay")
-
-    @property
-    def size(self):
-        return convToUnits(self._object.size, divby=1000)
-
-    @property
-    def wwn(self):
-        return '-'.join([self._object.wwn[s*4:s*4+4] for s in range(4)])
-
-    @property
-    @info
-    def manufacturer(self):
-        pc = self._object.productClass()
-        if (pc):
-            return pc.manufacturer()
-
-    @property
-    @info
-    def product(self):
-        return self._object.productClass()
-
-    @property
-    @info
-    def enclosure(self):
-        return self._object.getEnclosure()
-
-    @property
-    @info
-    def storagePool(self):
-        return self._object.getStoragePool()
-
-    @property
-    def name(self):
-        return self._object.description
-
-    @property
-    def status(self):
-        if not hasattr(self._object, 'statusString'): return 'Unknown'
-        else: return self._object.statusString()
-
-
-class HPEVAHostFCPortInfo(ComponentInfo):
-    implements(interfaces.IHPEVAHostFCPortInfo)
-
-    fc4Types = ProxyProperty("fc4Types")
-    fullDuplex = ProxyProperty("fullDuplex")
-    linkTechnology = ProxyProperty("linkTechnology")
-    networkAddresses = ProxyProperty("networkAddresses")
-    type = ProxyProperty("type")
-    description = ProxyProperty("description")
-    mtu = ProxyProperty("mtu")
-
-    @property
-    def wwn(self):
-        return '-'.join([self._object.wwn[s*4:s*4+4] for s in range(4)])
-
-    @property
-    def name(self):
-        return self._object.interfaceName
-
-    @property
-    def speed(self):
-        return self._object.speedString()
-
-    @property
-    @info
-    def controller(self):
-        return self._object.getController()
-
-    @property
-    def status(self):
-        if not hasattr(self._object, 'statusString'): return 'Unknown'
-        else: return self._object.statusString()
-
-class HPEVAStorageDiskEnclosureInfo(ComponentInfo):
-    implements(interfaces.IHPEVAStorageDiskEnclosureInfo)
-
-    @property
-    @info
-    def manufacturer(self):
-        pc = self._object.productClass()
-        if (pc):
-            return pc.manufacturer()
-
-    @property
-    @info
-    def product(self):
-        return self._object.productClass()
-
-    @property
-    def status(self):
-        if not hasattr(self._object, 'statusString'): return 'Unknown'
-        else: return self._object.statusString()
-
-class HPEVAStoragePoolInfo(ComponentInfo):
+class HPEVA_StoragePoolInfo(StoragePoolInfo):
     implements(interfaces.IHPEVAStoragePoolInfo)
 
     diskGroupType = ProxyProperty("diskGroupType")
     diskType = ProxyProperty("diskType")
     protLevel = ProxyProperty("protLevel")
-    totalDisks = ProxyProperty("totalDisks")
 
-    @property
-    def name(self):
-        return self._object.caption
-
-    @property
-    def totalBytesString(self):
-        return self._object.totalBytesString()
-
-    @property
-    def usedBytesString(self):
-        return self._object.usedBytesString()
-
-    @property
-    def availBytesString(self):
-        return self._object.availBytesString()
-
-    @property
-    def capacity(self):
-        capacity = self._object.capacity()
-        if str(capacity).isdigit():
-            capacity = '%s%%'%capacity
-        return capacity
-
-    @property
-    def status(self):
-        if not hasattr(self._object, 'statusString'): return 'Unknown'
-        else: return self._object.statusString()
-
-class HPEVAStorageProcessorCardInfo(ComponentInfo):
-    implements(interfaces.IHPEVAStorageProcessorCardInfo)
-
-    slot = ProxyProperty("slot")
-    serialNumber = ProxyProperty("serialNumber")
-    FWRev = ProxyProperty("FWRev")
-
-    @property
-    def name(self):
-        return self._object.caption
-
-    @property
-    @info
-    def manufacturer(self):
-        pc = self._object.productClass()
-        if (pc):
-            return pc.manufacturer()
-
-    @property
-    @info
-    def product(self):
-        return self._object.productClass()
-
-    @property
-    def uptime(self):
-        return self._object.uptimeString()
-
-    @property
-    def status(self):
-        if not hasattr(self._object, 'statusString'): return 'Unknown'
-        else: return self._object.statusString()
-
-class HPEVAStorageVolumeInfo(ComponentInfo):
+class HPEVA_StorageVolumeInfo(StorageVolumeInfo):
     implements(interfaces.IHPEVAStorageVolumeInfo)
 
     preferredPath = ProxyProperty("preferredPath")
-    accessType = ProxyProperty("accessType")
-    raidType = ProxyProperty("raidType")
-    diskType = ProxyProperty("diskType")
     mirrorCache = ProxyProperty("mirrorCache")
     readCachePolicy = ProxyProperty("readCachePolicy")
     writeCachePolicy = ProxyProperty("writeCachePolicy")
 
-    @property
-    def name(self):
-        return self._object.caption
-
-    @property
-    def totalBytesString(self):
-        return self._object.totalBytesString()
-
-    @property
-    @info
-    def storagePool(self):
-        return self._object.getStoragePool()
-
-    @property
-    def status(self):
-        if not hasattr(self._object, 'statusString'): return 'Unknown'
-        else: return self._object.statusString()
-
-class HPEVAConsistencySetInfo(ComponentInfo):
+class HPEVA_ConsistencySetInfo(CollectionInfo):
     implements(interfaces.IHPEVAConsistencySetInfo)
 
     participationType = ProxyProperty("participationType")
@@ -231,10 +50,6 @@ class HPEVAConsistencySetInfo(ComponentInfo):
     hostAccessMode = ProxyProperty("hostAccessMode")
     failSafe = ProxyProperty("failSafe")
     suspendMode = ProxyProperty("suspendMode")
-
-    @property
-    def name(self):
-        return self._object.caption
 
     @property
     @info
@@ -248,9 +63,4 @@ class HPEVAConsistencySetInfo(ComponentInfo):
     @property
     def logDiskReservedCapacity(self):
         return self._object.getLogDiskReservedCapacity()
-
-    @property
-    def status(self):
-        if not hasattr(self._object, 'statusString'): return 'Unknown'
-        else: return self._object.statusString()
 

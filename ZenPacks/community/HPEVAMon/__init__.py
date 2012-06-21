@@ -17,32 +17,36 @@ class ZenPack(ZenPackBase):
     """
 
     dcProperties = {
-        '/CIM/HPEVA': {
+        '/Storage/SMI-S/HP/EVA': {
+            'description': ('', 'string'),
+            'zWmiMonitorIgnore': (False, 'boolean'),
+            'zSnmpMonitorIgnore': (True, 'boolean'),
+        },
+        '/Storage/SMI-S/HP/EVA': {
             'description': ('', 'string'),
             'zCollectorPlugins': (
                 (
-                'community.wbem.HPEVADeviceMap',
-                'community.wbem.HPEVAStorageDiskEnclosureMap',
-                'community.wbem.HPEVAStoragePoolMap',
-                'community.wbem.HPEVAStorageProcessorCardMap',
-                'community.wbem.HPEVAHostFCPortMap',
-                'community.wbem.HPEVADiskDriveMap',
-                'community.wbem.HPEVAConsistencySetMap',
-                'community.wbem.HPEVAStorageVolumeMap',
+                'community.cim.HPEVAComputerSystemMap',
+                'community.cim.HPEVAStorageDiskEnclosureMap',
+                'community.cim.HPEVAStoragePoolMap',
+                'community.cim.HPEVAConsistencySetMap',
+                'community.cim.HPEVAStorageVolumeMap',
+                'community.cim.HPEVADiskDriveMap',
+                'community.cim.HPEVANetworkPortMap',
                 ),
                 'lines',
             ),
-            'zLinks': ("<a href='https://${here/zWbemProxy}:2372' target='_'>Command View EVA</a>", 'string'),
-            'zPythonClass': ('ZenPacks.community.HPEVAMon.HPEVADevice', 'string'),
-            'zSnmpMonitorIgnore': (True, 'boolean'),
-            'zWbemMonitorIgnore': (False, 'boolean'),
+            'zCIMConnectionString': ("'pywbemdb',scheme='https',host='${here/manageIp}',port=5989,user='${here/zWinUser}',password='${here/zWinPassword}',namespace='root/eva'", 'string'),
+            'zCIMHWConnectionString': ("'pywbemdb',scheme='https',host='${here/manageIp}',port=5989,user='${here/zWinUser}',password='${here/zWinPassword}',namespace='root/eva'", 'string'),
         },
     }
 
     def addDeviceClass(self, app, dcp, properties):
         try:
             dc = app.zport.dmd.Devices.getOrganizer(dcp)
-        except:
+            if dc.getOrganizerName() != dcp:
+                raise KeyError
+        except KeyError:
             dcp, newdcp = dcp.rsplit('/', 1)
             dc = self.addDeviceClass(app, dcp, self.dcProperties.get(dcp, {}))
             manage_addDeviceClass(dc, newdcp)
@@ -54,23 +58,11 @@ class ZenPack(ZenPackBase):
         return dc
 
     def install(self, app):
-        if hasattr(self.dmd.Reports, 'Device Reports'):
-            devReports = self.dmd.Reports['Device Reports']
-            rClass = devReports.getReportClass()
-            if not hasattr(devReports, 'HP EVA Reports'):
-                dc = rClass('HP EVA Reports', None)
-                devReports._setObject('HP EVA Reports', dc)
         for devClass, properties in self.dcProperties.iteritems():
             self.addDeviceClass(app, devClass, properties)
         ZenPackBase.install(self, app)
 
     def upgrade(self, app):
-        if hasattr(self.dmd.Reports, 'Device Reports'):
-            devReports = self.dmd.Reports['Device Reports']
-            rClass = devReports.getReportClass()
-            if not hasattr(devReports, 'HP EVA Reports'):
-                dc = rClass('HP EVA Reports', None)
-                devReports._setObject('HP EVA Reports', dc)
         for devClass, properties in self.dcProperties.iteritems():
             self.addDeviceClass(app, devClass, properties)
         ZenPackBase.upgrade(self, app)
@@ -80,12 +72,5 @@ class ZenPack(ZenPackBase):
             try:
                 dc = app.zport.dmd.Devices.getOrganizer(dcp)
                 dc._delProperty('zCollectorPlugins')
-                dc._delProperty('zPythonClass')
-                dc._delProperty('zSnmpMonitorIgnore')
-                dc._delProperty('zWbemMonitorIgnore')
             except: continue
         ZenPackBase.remove(self, app, leaveObjects)
-        if hasattr(self.dmd.Reports, 'Device Reports'):
-            devReports = self.dmd.Reports['Device Reports']
-            if hasattr(devReports, 'HP EVA Reports'):
-                devReports._delObject('HP EVA Reports')
