@@ -12,9 +12,9 @@ __doc__="""HPEVAStorageVolumeMap
 
 HPEVAStorageVolumeMap maps HPEVA_StorageVolume class to CIM_StorageVolume class.
 
-$Id: HPEVAStorageVolumeMap.py,v 1.5 2012/06/22 00:10:05 egor Exp $"""
+$Id: HPEVAStorageVolumeMap.py,v 1.6 2012/06/26 23:41:23 egor Exp $"""
 
-__version__ = '$Revision: 1.5 $'[11:-2]
+__version__ = '$Revision: 1.6 $'[11:-2]
 
 from ZenPacks.community.CIMMon.modeler.plugins.community.cim.CIMStorageVolumeMap \
     import CIMStorageVolumeMap
@@ -32,7 +32,7 @@ class HPEVAStorageVolumeMap(CIMStorageVolumeMap):
         return {
             "CIM_StorageVolume":
                 (
-                    "SELECT * FROM HPEVA_StorageVolume",
+                    "SELECT __PATH,Access,BlockSize,DeviceID,DiskGroupID,ElementName,MirrorCache,Name,PreferredPath,raidType,ReadCachePolicy,SystemName,WriteCachePolicy FROM HPEVA_StorageVolume",
                     None,
                     cs,
                     {
@@ -40,39 +40,20 @@ class HPEVAStorageVolumeMap(CIMStorageVolumeMap):
                         "accessType":"Access",
                         "blockSize":"BlockSize",
                         "id":"DeviceID",
-                        "title":"ElementName",
-                        "diskType":"raidType",
-                        "mirrorCache":"MirrorCache",
-                        "preferredPath":"PreferredPath",
-                        "readCachePolicy":"ReadCachePolicy",
-                        "writeCachePolicy":"WriteCachePolicy",
                         "setStoragePool":"DiskGroupID",
+                        "title":"ElementName",
+                        "mirrorCache":"MirrorCache",
+                        "_diskname":"Name",
+                        "preferredPath":"PreferredPath",
+                        "diskType":"raidType",
+                        "readCachePolicy":"ReadCachePolicy",
                         "_sysname":"SystemName",
-                    },
-                ),
-            "CIM_SystemComponent_remove":
-                (
-                    "SELECT GroupComponent,PartComponent FROM HPEVA_StorageVolumeSystemDevice",
-                    None,
-                    cs,
-                    {
-                        "gc":"GroupComponent", # System
-                        "pc":"PartComponent", # SystemComponent
-                    },
-                ),
-            "CIM_AllocatedFromStoragePool_remove":
-                (
-                    "SELECT Antecedent,Dependent FROM HPEVA_VolumeAllocatedFromStoragePool",
-                    None,
-                    cs,
-                    {
-                        "ant":"Antecedent",
-                        "dep":"Dependent",
+                        "writeCachePolicy":"WriteCachePolicy",
                     },
                 ),
             "CIM_MemberOfCollection":
                 (
-                    "SELECT Member,Collection FROM HPEVA_OrderedMemberOfCollection",
+                    "SELECT Member,Collection FROM CIM_MemberOfCollection",
                     None,
                     cs,
                     {
@@ -80,14 +61,8 @@ class HPEVAStorageVolumeMap(CIMStorageVolumeMap):
                         "collection":"Collection",
                     },
                 ),
-            "CIM_ElementStatisticalData":
-                (
-                    "SELECT ManagedElement,Stats FROM HPEVA_VolumeElementStatisticalData",
-                    None,
-                    cs,
-                    {
-                        "me":"ManagedElement",
-                        "stats":"Stats",
-                    },
-                ),
             }
+
+    def _getStatPath(self, results, inst):
+        return 'HPEVA_VolumeStatisticalData.InstanceID="%s.%s"'%(
+            inst.get("_sysname"),inst.get("_diskname"))

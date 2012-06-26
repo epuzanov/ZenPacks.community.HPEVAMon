@@ -27,6 +27,9 @@ class ZenPack(ZenPackBase):
             'zCollectorPlugins': (
                 (
                 'community.cim.HPEVAComputerSystemMap',
+                'community.cim.HPEVAOperatingSystemMap',
+                'community.cim.HPEVARedundancySetMap',
+                'community.cim.HPEVAStorageProcessorCardMap',
                 'community.cim.HPEVAStorageDiskEnclosureMap',
                 'community.cim.HPEVAStoragePoolMap',
                 'community.cim.HPEVAConsistencySetMap',

@@ -117,13 +117,19 @@ Modeler Plugins
 
 - **community.cim.HPEVAComputerSystemMap** - ComputerSystem modeler plugin, tried
   to identify snmpSysName, snmpDescr, snmpContact, Model, Vendor and Serial
-  Number information for storage device and it storage controllers
+  Number information for storage device
 - **community.cim.HPEVAConsistencySetMap** - Collection modeler plugin, tried to
   identify Replication groups
 - **community.cim.HPEVADiskDriveMap** - Hard Disks modeler plugin
-- **community.cim.CIMNetworkPortMap** - FC Ports modeler plugin
+- **community.cim.HPEVANetworkPortMap** - FC Ports modeler plugin
+- **community.cim.HPEVAOperatingSystemMap** - Operating System modeler plugin,
+  tried identify OS Version and OS Vendor
+- **community.cim.HPEVARedundancySetMap** - Redundancy Set modeler plugin, tried
+  identify Redundancy sets
 - **community.cim.HPEVAStorageDiskEnclosureMap** - Disk Enclosures modeler
   plugin, tried to identify Model, Vendor and Layout of Disk Enclosures
+- **community.cim.HPEVAStorageProcessorCardMap** - Controller modeler plugin, tried to
+  identify storage controllers
 - **community.cim.HPEVAStoragePoolMap** - Storage Pool (Disk Group) modeler
   plugin, tried to identify storage pools configured on storage
 - **community.cim.HPEVAStorageVolumeMap** - Storage Volume modeler plugin, tried
@@ -133,7 +139,6 @@ Device Classes
 --------------
 
 - Devices/Storage/SMI-S/HP/EVA
-
 
 Monitoring Templates
 --------------------

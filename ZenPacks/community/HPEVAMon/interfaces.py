@@ -12,13 +12,13 @@ __doc__="""interfaces
 
 describes the form field to the user interface.
 
-$Id: interfaces.py,v 1.5 2012/06/22 00:01:24 egor Exp $"""
+$Id: interfaces.py,v 1.6 2012/06/26 23:35:12 egor Exp $"""
 
-__version__ = "$Revision: 1.5 $"[11:-2]
+__version__ = "$Revision: 1.6 $"[11:-2]
 
 from ZenPacks.community.CIMMon.interfaces import IStoragePoolInfo,\
                                                 IStorageVolumeInfo,\
-                                                ICollectionInfo
+                                                IReplicationGroupInfo
 from Products.Zuul.form import schema
 from Products.Zuul.utils import ZuulMessageFactory as _t
 
@@ -43,7 +43,7 @@ class IHPEVAStorageVolumeInfo(IStorageVolumeInfo):
     writeCachePolicy = schema.Text(title=u"Write Cache Policy", readonly=True,
                                                                 group='Details')
 
-class IHPEVAConsistencySetInfo(ICollectionInfo):
+class IHPEVAConsistencySetInfo(IReplicationGroupInfo):
     """
     Info adapter for HPEVA DR Group components.
     """

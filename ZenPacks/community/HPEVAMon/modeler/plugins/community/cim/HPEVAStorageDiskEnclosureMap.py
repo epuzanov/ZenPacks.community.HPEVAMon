@@ -13,9 +13,9 @@ __doc__="""HPEVAStorageDiskEnclosureMap
 HPEVAStorageDiskEnclosureMap maps HPEVA_StorageDiskEnclosure class to
 CIM_Chassis class.
 
-$Id: HPEVAStorageDiskEnclosureMap.py,v 1.5 2012/06/22 00:08:59 egor Exp $"""
+$Id: HPEVAStorageDiskEnclosureMap.py,v 1.6 2012/06/26 23:39:40 egor Exp $"""
 
-__version__ = '$Revision: 1.5 $'[11:-2]
+__version__ = '$Revision: 1.6 $'[11:-2]
 
 from ZenPacks.community.CIMMon.modeler.plugins.community.cim.CIMChassisMap \
     import CIMChassisMap
@@ -31,7 +31,7 @@ class HPEVAStorageDiskEnclosureMap(CIMChassisMap):
         return {
             "CIM_Chassis":
                 (
-                    "SELECT * FROM HPEVA_StorageDiskEnclosure",
+                    "SELECT __PATH,ChassisPackageType,ElementName,Manufacturer,Model,SerialNumber,PartNumber,Tag FROM HPEVA_StorageDiskEnclosure",
                     None,
                     cs,
                     {
@@ -46,34 +46,14 @@ class HPEVAStorageDiskEnclosureMap(CIMChassisMap):
                         "_sysname":"Tag",
                     },
                 ),
-            "CIM_SystemComponent":
+            "HPEVA_StorageProduct":
                 (
-                    "SELECT GroupComponent,PartComponent FROM HPEVA_ComponentCS",
+                    "SELECT ElementName,IdentifyingNumber,SKUNumber,Version FROM HPEVA_StorageProduct",
                     None,
                     cs,
                     {
-                        "gc":"GroupComponent", # System
-                        "pc":"PartComponent", # SystemComponent
-                    },
-                ),
-            "CIM_ComputerSystemPackage":
-                (
-                    "SELECT Antecedent,Dependent FROM HPEVA_EnclosureComputerSystemPackage",
-                    None,
-                    cs,
-                    {
-                        "ant":"Antecedent", # Chassis
-                        "dep":"Dependent", # ComputerSystem
-                    },
-                ),
-            "HPEVA_StorageSystem":
-                (
-                    "SELECT * FROM HPEVA_StorageSystem",
-                    None,
-                    cs,
-                    {
-                        "model":"Model",
-                        "name":"Name",
+                        "model":"SKUNumber",
+                        "name":"IdentifyingNumber",
                     },
                 ),
             }
@@ -84,9 +64,9 @@ class HPEVAStorageDiskEnclosureMap(CIMChassisMap):
     def _getLayout(self, results, inst):
         model = inst.get("setProductKey")
         if model not in ("M5314A", "M5314C", "M6412A"):
-            sysname = inst.get("_sysname").split(".", 1)[0]
-            for ssys in results.get("HPEVA_StorageSystem") or ():
-                if ssys.get("name") != sysname: break
+            sysname = str(inst.get("_sysname")).split(".", 1)[0]
+            for ssys in results.get("HPEVA_StorageProduct") or ():
+                if ssys.get("name") == sysname: break
             else: ssys = {"model":"Unknown"}
             sysmodel = ssys.get("model")
             if sysmodel in ("HSV300", "HSV400", "HSV450"):

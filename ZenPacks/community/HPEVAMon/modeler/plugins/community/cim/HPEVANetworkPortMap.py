@@ -12,9 +12,9 @@ __doc__="""HPEVANetworkPortMap
 
 HPEVANetworkPortMap maps HPEVA_NetworkPort class to CIM_NetworkPort class.
 
-$Id: HPEVANetworkPortMap.py,v 1.5 2012/02/22 00:07:51 egor Exp $"""
+$Id: HPEVANetworkPortMap.py,v 1.6 2012/02/26 23:38:11 egor Exp $"""
 
-__version__ = '$Revision: 1.5 $'[11:-2]
+__version__ = '$Revision: 1.6 $'[11:-2]
 
 from ZenPacks.community.CIMMon.modeler.plugins.community.cim.CIMNetworkPortMap \
     import CIMNetworkPortMap
@@ -30,13 +30,14 @@ class HPEVANetworkPortMap(CIMNetworkPortMap):
         return {
             "CIM_NetworkPort":
                 (
-                    "SELECT * FROM CIM_NetworkPort",
+                    "SELECT __PATH,ActiveMaximumTransmissionUnit,Description,DeviceID,ElementName,EnabledDefault,EnabledState,LinkTechnology,PermanentAddress,Speed,SystemName FROM CIM_NetworkPort",
                     None,
                     cs,
                     {
                         "setPath":"__PATH",
-                        "description":"Description",
                         "mtu":"ActiveMaximumTransmissionUnit",
+                        "description":"Description",
+                        "_deviceid":"DeviceID",
                         "interfaceName":"ElementName",
                         "adminStatus":"EnabledDefault",
                         "operStatus":"EnabledState",
@@ -46,24 +47,13 @@ class HPEVANetworkPortMap(CIMNetworkPortMap):
                         "_sysname":"SystemName",
                     }
                 ),
-            "CIM_SystemComponent":
-                (
-                    "SELECT GroupComponent,PartComponent FROM HPEVA_SystemDevice",
-                    None,
-                    cs,
-                    {
-                        "gc":"GroupComponent", # System
-                        "pc":"PartComponent", # SystemComponent
-                    },
-                ),
-            "CIM_ElementStatisticalData":
-                (
-                    "SELECT ManagedElement,Stats FROM HPEVA_HostFCPortElementStatisticalData",
-                    None,
-                    cs,
-                    {
-                        "me":"ManagedElement",
-                        "stats":"Stats",
-                    },
-                ),
             }
+
+    def _getController(self, results, inst):
+        return 'HPEVA_StorageProcessorSystem.Name="%s"'%inst.get("_sysname")
+
+    def _getStatPath(self, results, inst):
+        if not str(inst.get("setPath")).startswith("HPEVA_HostFCPort"):
+            return ""
+        return 'HPEVA_HostFCPortStatisticalData.InstanceID="%s.%s"'%(
+            inst.get("_sysname"),inst.get("_deviceid"))

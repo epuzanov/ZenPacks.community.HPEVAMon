@@ -12,9 +12,9 @@ __doc__="""HPEVA_StoragePool
 
 HPEVA_StoragePool is an abstraction of a HPEVA_StoragePool
 
-$Id: HPEVA_StoragePool.py,v 1.7 2012/06/22 00:03:50 egor Exp $"""
+$Id: HPEVA_StoragePool.py,v 1.8 2012/06/26 23:31:01 egor Exp $"""
 
-__version__ = "$Revision: 1.7 $"[11:-2]
+__version__ = "$Revision: 1.8 $"[11:-2]
 
 from Globals import InitializeClass
 from ZenPacks.community.CIMMon.CIM_StoragePool import CIM_StoragePool
@@ -35,10 +35,14 @@ class HPEVA_StoragePool(CIM_StoragePool):
 
 
     _relations = CIM_StoragePool._relations + (
-        ("collections", ToMany(
+        ("replicationgroups", ToMany(
             ToOne,
             "ZenPacks.community.HPEVAMon.HPEVA_ConsistencySet",
             "storagepool")),
         )
+
+    def groupId(self):
+        try: return int(self.poolId[:2])
+        except: return 0
 
 InitializeClass(HPEVA_StoragePool)

@@ -12,18 +12,18 @@ __doc__="""HPEVA_ConsistencySet
 
 HPEVA_ConsistencySet is an abstraction of a HPEVA_ConsistencySet
 
-$Id: HPEVA_ConsistencySet.py,v 1.4 2012/06/22 00:03:15 egor Exp $"""
+$Id: HPEVA_ConsistencySet.py,v 1.5 2012/06/26 23:31:18 egor Exp $"""
 
-__version__ = "$Revision: 1.4 $"[11:-2]
+__version__ = "$Revision: 1.5 $"[11:-2]
 
 from Globals import InitializeClass
-from ZenPacks.community.CIMMon.CIM_Collection import CIM_Collection
+from ZenPacks.community.CIMMon.CIM_ReplicationGroup import CIM_ReplicationGroup
 from Products.ZenRelations.RelSchema import ToOne, ToMany
 from AccessControl import ClassSecurityInfo
 from Products.ZenModel.ZenossSecurity import *
 from Products.ZenUtils.Utils import convToUnits
 
-class HPEVA_ConsistencySet(CIM_Collection):
+class HPEVA_ConsistencySet(CIM_ReplicationGroup):
     """HPEVA_ConsistencySet object"""
 
     failSafe = ""
@@ -33,7 +33,7 @@ class HPEVA_ConsistencySet(CIM_Collection):
     suspendMode = ""
     writeMode = ""
 
-    _properties = CIM_Collection._properties + (
+    _properties = CIM_ReplicationGroup._properties + (
                  {'id':'failSafe', 'type':'string', 'mode':'w'},
                  {'id':'hostAccessMode', 'type':'string', 'mode':'w'},
                  {'id':'participationType', 'type':'string', 'mode':'w'},
@@ -42,10 +42,10 @@ class HPEVA_ConsistencySet(CIM_Collection):
                  {'id':'writeMode', 'type':'string', 'mode':'w'},
                 )
 
-    _relations = CIM_Collection._relations + (
+    _relations = CIM_ReplicationGroup._relations + (
         ("storagepool", ToOne(ToMany,
             "ZenPacks.community.HPEVAMon.HPEVA_StoragePool",
-            "collections")),
+            "replicationgroups")),
         )
 
     security = ClassSecurityInfo()

@@ -12,14 +12,14 @@ __doc__="""HPEVADiskDriveMap
 
 HPEVADiskDriveMap maps HPEVA_DiskDrive class to CIM_DiskDrive class.
 
-$Id: HPEVADiskDriveMap.py,v 1.3 2012/06/22 00:07:14 egor Exp $"""
+$Id: HPEVADiskDriveMap.py,v 1.4 2012/06/26 23:37:50 egor Exp $"""
 
-__version__ = '$Revision: 1.3 $'[11:-2]
+__version__ = '$Revision: 1.4 $'[11:-2]
 
 from ZenPacks.community.CIMMon.modeler.plugins.community.cim.CIMDiskDriveMap \
     import CIMDiskDriveMap
 import re
-CAPTIONPAT = re.compile(r'^Shelf (\d*), Disk Bay (\d*), Disk Group (.*)$')
+CAPTIONPAT = re.compile(r'^Shelf (?P<setChassis>\d*), Disk Bay (?P<bay>\d*), Disk Group (?P<setStoragePool>.*)$')
 
 class HPEVADiskDriveMap(CIMDiskDriveMap):
     """Map CIM_DiskDrive CIM class to HardDisk class"""
@@ -32,25 +32,26 @@ class HPEVADiskDriveMap(CIMDiskDriveMap):
         return {
             "CIM_DiskDrive":
                 (
-                    "SELECT * FROM HPEVA_DiskDrive",
+                    "SELECT __PATH,Caption,DeviceID,DriveType,ElementName,FormFactor,MaxMediaSize,Model,Name,SystemName FROM HPEVA_DiskDrive",
                     None,
                     cs,
                     {
                         "setPath":"__PATH",
+                        "bay":"Caption",
                         "id":"DeviceID",
                         "diskType":"DriveType",
-                        "formFactor":"FormFactor",
-                        "size":"MaxMediaSize",
                         "description":"ElementName",
                         "title":"ElementName",
+                        "formFactor":"FormFactor",
+                        "size":"MaxMediaSize",
                         "setProductKey":"Model",
-                        "bay":"Caption",
+                        "_diskname":"Name",
                         "_sysname":"SystemName",
                     }
                 ),
             "CIM_PhysicalPackage":
                 (
-                    "SELECT * FROM HPEVA_DiskModule",
+                    "SELECT __PATH,Manufacturer,Model,Replaceable,SerialNumber,Tag,Version FROM CIM_PhysicalPackage",
                     None,
                     cs,
                     {
@@ -59,58 +60,19 @@ class HPEVADiskDriveMap(CIMDiskDriveMap):
                         "setProductKey":"Model",
                         "replaceable":"Replaceable",
                         "serialNumber":"SerialNumber",
+                        "tag":"Tag",
                         "FWRev":"Version",
                     },
                 ),
             "CIM_StoragePool":
                 (
-                    "SELECT * FROM CIM_StoragePool",
+                    "SELECT __PATH,ActualDiskFailureProtectionLevel,DiskGroupType,DiskType,ElementName,InstanceID,Name,PoolID,Primordial,TotalManagedSpace,Usage FROM HPEVA_StoragePool",
                     None,
                     cs,
                     {
                         "_path":"__PATH",
                         "_primordial":"Primordial",
                         "name":"Name",
-                    },
-                ),
-            "CIM_SystemComponent":
-                (
-                    "SELECT GroupComponent,PartComponent FROM HPEVA_DiskDriveSystemDevice",
-                    None,
-                    cs,
-                    {
-                        "gc":"GroupComponent", # System
-                        "pc":"PartComponent", # SystemComponent
-                    },
-                ),
-            "CIM_Realizes":
-                (
-                    "SELECT Antecedent,Dependent FROM HPEVA_DiskModuleRealizes",
-                    None,
-                    cs,
-                    {
-                        "ant":"Antecedent", # PhysicalPackage
-                        "dep":"Dependent", # DiskDrive
-                    },
-                ),
-            "CIM_Container":
-                (
-                    "SELECT GroupComponent,PartComponent FROM HPEVA_DiskEnclosureModule",
-                    None,
-                    cs,
-                    {
-                        "gc":"GroupComponent", # Enclosure
-                        "pc":"PartComponent", # PhysicalPackage
-                    },
-                ),
-            "CIM_ElementStatisticalData":
-                (
-                    "SELECT ManagedElement,Stats FROM HPEVA_DiskDriveElementStatisticalData",
-                    None,
-                    cs,
-                    {
-                        "me":"ManagedElement",
-                        "stats":"Stats",
                     },
                 ),
             }
@@ -128,14 +90,17 @@ class HPEVADiskDriveMap(CIMDiskDriveMap):
         return "lff"
 
     def _getPackage(self, results, inst):
-        package = self._findInstance(results, "CIM_PhysicalPackage", "_pPath",
-                    self._findInstance(results, "CIM_Realizes", "dep",
-                    inst.get("setPath")).get("ant"))
+        tag = ".".join((str(inst.get("_sysname")),str(inst.get("_diskname"))))
+        for package in results.get("CIM_PhysicalPackage") or ():
+            if package.get("tag") == tag: break
+        else: package = {}
         r = CAPTIONPAT.match(str(inst.get("bay")))
         if r:
-            package["bay"] = int(r.group(2))
-            package["setStoragePool"] = r.group(3)
+            package.update(r.groupdict())
         return package
+
+    def _getBay(self, results, inst):
+        return int(inst.get("bay") or -1)
 
     def _getPool(self, results, inst):
         spName = inst.get("setStoragePool")
@@ -149,3 +114,15 @@ class HPEVADiskDriveMap(CIMDiskDriveMap):
             if sp.get("name") == spName: break
         else: spPath = ""
         return spPath
+
+    def _getChassis(self, results, inst):
+        try:
+            sName = int(inst.get("setChassis"))
+        except Exception:
+            return ""
+        return 'HPEVA_StorageDiskEnclosure.Tag="%s.\\Hardware\\Disk Enclosure %s",CreationClassName="HPEVA_StorageDiskEnclosure"'%(
+            inst.get("_sysname"), sName)
+
+    def _getStatPath(self, results, inst):
+        return 'HPEVA_DiskDriveStatisticalData.InstanceID="%s.%s"'%(
+            inst.get("_sysname"),inst.get("_diskname"))

@@ -12,9 +12,9 @@ __doc__="""info.py
 
 Representation of HPEVA components.
 
-$Id: info.py,v 1.5 2012/06/22 00:01:01 egor Exp $"""
+$Id: info.py,v 1.6 2012/06/26 23:34:57 egor Exp $"""
 
-__version__ = "$Revision: 1.5 $"[11:-2]
+__version__ = "$Revision: 1.6 $"[11:-2]
 
 from zope.interface import implements
 from Products.Zuul.infos import ProxyProperty
@@ -22,7 +22,7 @@ from Products.Zuul.decorators import info
 from Products.ZenUtils.Utils import convToUnits
 from ZenPacks.community.CIMMon.info import  StoragePoolInfo,\
                                             StorageVolumeInfo,\
-                                            CollectionInfo
+                                            ReplicationGroupInfo
 from ZenPacks.community.HPEVAMon import interfaces
 
 
@@ -41,7 +41,7 @@ class HPEVA_StorageVolumeInfo(StorageVolumeInfo):
     readCachePolicy = ProxyProperty("readCachePolicy")
     writeCachePolicy = ProxyProperty("writeCachePolicy")
 
-class HPEVA_ConsistencySetInfo(CollectionInfo):
+class HPEVA_ConsistencySetInfo(ReplicationGroupInfo):
     implements(interfaces.IHPEVAConsistencySetInfo)
 
     participationType = ProxyProperty("participationType")

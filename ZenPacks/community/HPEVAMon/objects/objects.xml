@@ -476,7 +476,7 @@ True
 2
 </property>
 <property type="string" id="eventClass" mode="w" >
-/Status/HPEVAConsistencySet
+/Status/CIM_ManagedSystemElement
 </property>
 <property type="int" id="severity" mode="w" >
 4
@@ -1560,10 +1560,10 @@ True
 300
 </property>
 <property type="string" id="cs" mode="w" >
-${here/zCIMConnectionString}
+${here/zCIMHWConnectionString}
 </property>
 <property type="string" id="sql" mode="w" >
-SELECT KBytesRead,KBytesWritten,ReadIOs,ReadLatencyTime_ms,WriteIOs,WriteLatencyTime_ms FROM HPEVA_DiskDriveStatisticalData WHERE Description="EVA Disk level metrics for ${device/snmpSysName}" AND GroupId="${here/poolId}"
+SELECT DriveQDepth,KBytesRead,KBytesWritten,ReadIOs,ReadLatencyTime_ms,WriteIOs,WriteLatencyTime_ms FROM HPEVA_DiskDriveStatisticalData WHERE Description="EVA Disk level metrics for ${device/snmpSysName}" AND GroupId="${here/groupId}"
 </property>
 <tomanycont id='datapoints'>
 <object id='KBytesRead_sum' module='Products.ZenModel.RRDDataPoint' class='RRDDataPoint'>
@@ -1749,7 +1749,7 @@ True
 2
 </property>
 <property type="string" id="eventClass" mode="w" >
-/Status/HPEVAStoragePool
+/Status/CIM_ManagedSystemElement
 </property>
 <property type="int" id="severity" mode="w" >
 4
@@ -1766,7 +1766,7 @@ True
 True
 </property>
 <property type="string" id="maxval" mode="w" >
-here.totalBytes() * here.threshold / 100
+here.totalBytes() * .9
 </property>
 <property type="string" id="eventClass" mode="w" >
 /Perf/StoragePool
@@ -3319,5 +3319,8 @@ AVERAGE
 </tomanycont>
 </object>
 </tomanycont>
+</object>
+<!-- ('', 'zport', 'dmd', 'Events', 'Perf', 'StoragePool') -->
+<object id='/zport/dmd/Events/Perf/StoragePool' module='Products.ZenEvents.EventClass' class='EventClass'>
 </object>
 </objects>

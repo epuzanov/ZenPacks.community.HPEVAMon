@@ -12,11 +12,10 @@ __doc__="""HPEVAComputerSystemMap
 
 HPEVAComputerSystemMap maps HPEVA_ComputerSystem class to CIM_ComputerSystem class.
 
-$Id: HPEVAComputerSystemMap.py,v 1.0 2012/06/21 23:47:24 egor Exp $"""
+$Id: HPEVAComputerSystemMap.py,v 1.1 2012/06/26 23:35:39 egor Exp $"""
 
-__version__ = '$Revision: 1.0 $'[11:-2]
+__version__ = '$Revision: 1.1 $'[11:-2]
 
-from Products.DataCollector.plugins.DataMaps import MultiArgs
 from ZenPacks.community.CIMMon.modeler.plugins.community.cim.CIMComputerSystemMap \
     import CIMComputerSystemMap
 
@@ -31,52 +30,39 @@ class HPEVAComputerSystemMap(CIMComputerSystemMap):
         return {
             "CIM_ComputerSystem":
                 (
-                    "SELECT * FROM CIM_ComputerSystem",
+                    "SELECT __PATH,Description,ElementName,FirmwareVersion,Name,PrimaryOwnerContact FROM HPEVA_StorageSystem",
                     None,
                     cs,
                     {
                         "setPath":"__PATH",
                         "_descr":"Description",
-                        "_contact":"PrimaryOwnerContact",
-                        "_sysname":"Name",
-                        "FWRev":"FirmwareVersion",
                         "title":"ElementName",
-                    },
-                ),
-            "CIM_SystemComponent":
-                (
-                    "SELECT GroupComponent,PartComponent FROM HPEVA_ComponentCS",
-                    None,
-                    cs,
-                    {
-                        "gc":"GroupComponent", # System
-                        "pc":"PartComponent", # SystemComponent
-                    },
-                ),
-            "CIM_ComputerSystemPackage":
-                (
-                    "SELECT Antecedent,Dependent FROM HPEVA_ComputerSystemPackage",
-                    None,
-                    cs,
-                    {
-                        "ant":"Antecedent", # Controller
-                        "dep":"Dependent", # ComputerSystem
+                        "FWRev":"FirmwareVersion",
+                        "_sysname":"Name",
+                        "_contact":"PrimaryOwnerContact",
                     },
                 ),
             "CIM_PhysicalPackage":
                 (
-                    "SELECT * FROM HPEVA_PhysicalPackage",
+                    "SELECT __PATH,Manufacturer,Model,Replaceable,SerialNumber,Tag,Version FROM HPEVA_PhysicalPackage",
                     None,
                     cs,
                     {
-                        "_path":"__PATH",
+                        "_pPath":"__PATH",
                         "_manuf":"Manufacturer",
                         "setProductKey":"Model",
                         "serialNumber":"SerialNumber",
+                        "tag":"Tag",
                     },
                 ),
             }
 
-    def _getStatPath(self, results, inst):
-        return 'HPEVA_StorageSystemControllerStatisticalData.InstanceID="%s"'%(
-            inst.get("_sysname"))
+    def _getPackage(self, results, inst):
+        sysname = inst.get("_sysname")
+        if not sysname: return {}
+        if "." not in sysname:
+            sysname="%s.\\Hardware\\Controller Enclosure\\Controller 1"%sysname
+        for pack in results.get("CIM_PhysicalPackage") or ():
+            if sysname in str(pack.get("tag")): break
+        else: pack = {}
+        return pack
