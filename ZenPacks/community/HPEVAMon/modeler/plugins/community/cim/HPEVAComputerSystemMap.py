@@ -12,9 +12,9 @@ __doc__="""HPEVAComputerSystemMap
 
 HPEVAComputerSystemMap maps HPEVA_ComputerSystem class to CIM_ComputerSystem class.
 
-$Id: HPEVAComputerSystemMap.py,v 1.1 2012/06/26 23:35:39 egor Exp $"""
+$Id: HPEVAComputerSystemMap.py,v 1.2 2012/06/27 19:49:54 egor Exp $"""
 
-__version__ = '$Revision: 1.1 $'[11:-2]
+__version__ = '$Revision: 1.2 $'[11:-2]
 
 from ZenPacks.community.CIMMon.modeler.plugins.community.cim.CIMComputerSystemMap \
     import CIMComputerSystemMap
@@ -60,9 +60,7 @@ class HPEVAComputerSystemMap(CIMComputerSystemMap):
     def _getPackage(self, results, inst):
         sysname = inst.get("_sysname")
         if not sysname: return {}
-        if "." not in sysname:
-            sysname="%s.\\Hardware\\Controller Enclosure\\Controller 1"%sysname
         for pack in results.get("CIM_PhysicalPackage") or ():
-            if sysname in str(pack.get("tag")): break
+            if sysname == str(pack.get("tag")): break
         else: pack = {}
         return pack

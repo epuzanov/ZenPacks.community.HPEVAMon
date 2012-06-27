@@ -11,17 +11,19 @@
 __doc__="""HPEVAStorageProcessorCardMap
 
 HPEVAStorageProcessorCardMap maps HPEVA_StorageProcessorCard class to
-CIM_Controller class.
+CIM_ComputerSystem class.
 
-$Id: HPEVAStorageProcessorCardMap.py,v 1.0 2012/06/26 23:06:24 egor Exp $"""
+$Id: HPEVAStorageProcessorCardMap.py,v 1.1 2012/06/27 19:50:53 egor Exp $"""
 
-__version__ = '$Revision: 1.0 $'[11:-2]
+__version__ = '$Revision: 1.1 $'[11:-2]
 
 from ZenPacks.community.CIMMon.modeler.plugins.community.cim.CIMControllerMap \
     import CIMControllerMap
 
-class HPEVAMap(CIMControllerMap):
-    """Map HPEVA_Controller CIM class to CIM_Controller class"""
+class HPEVAStorageProcessorCardMap(CIMControllerMap):
+    """Map HPEVA_StorageProcessorCard CIM class to CIM_ComputerSystem class"""
+
+    modname = "ZenPacks.community.CIMMon.CIM_ComputerSystem"
 
     def queries(self, device):
         connectionString = getattr(device, 'zCIMHWConnectionString', '')
@@ -59,9 +61,14 @@ class HPEVAMap(CIMControllerMap):
     def _ignoreController(self, inst):
         return False
 
+    def _getSlot(self, results, inst):
+        try: return int(inst.get("title").rsplit(' ', 1)[-1])
+        except: return 0
+
     def _getPackage(self, results, inst):
         return {
-            'setPath':'HPEVA_StorageProcessorSystem.Name="%s"'%inst.get("tag"),
+            'id':inst.get("tag"),
+            'setPath':'HPEVA_StorageProcessorSystem.Name="%s  ",CreationClassName="HPEVA_StorageProcessorSystem"'%inst.get("tag"),
             }
 
     def _getStatPath(self, results, inst):

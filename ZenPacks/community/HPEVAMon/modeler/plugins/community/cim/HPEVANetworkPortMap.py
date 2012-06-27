@@ -12,9 +12,9 @@ __doc__="""HPEVANetworkPortMap
 
 HPEVANetworkPortMap maps HPEVA_NetworkPort class to CIM_NetworkPort class.
 
-$Id: HPEVANetworkPortMap.py,v 1.6 2012/02/26 23:38:11 egor Exp $"""
+$Id: HPEVANetworkPortMap.py,v 1.7 2012/06/27 19:50:24 egor Exp $"""
 
-__version__ = '$Revision: 1.6 $'[11:-2]
+__version__ = '$Revision: 1.7 $'[11:-2]
 
 from ZenPacks.community.CIMMon.modeler.plugins.community.cim.CIMNetworkPortMap \
     import CIMNetworkPortMap
@@ -50,7 +50,7 @@ class HPEVANetworkPortMap(CIMNetworkPortMap):
             }
 
     def _getController(self, results, inst):
-        return 'HPEVA_StorageProcessorSystem.Name="%s"'%inst.get("_sysname")
+        return 'HPEVA_StorageProcessorSystem.Name="%s  ",CreationClassName="HPEVA_StorageProcessorSystem"'%inst.get("_sysname")
 
     def _getStatPath(self, results, inst):
         if not str(inst.get("setPath")).startswith("HPEVA_HostFCPort"):

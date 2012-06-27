@@ -12,9 +12,9 @@ __doc__="""HPEVAStorageVolumeMap
 
 HPEVAStorageVolumeMap maps HPEVA_StorageVolume class to CIM_StorageVolume class.
 
-$Id: HPEVAStorageVolumeMap.py,v 1.6 2012/06/26 23:41:23 egor Exp $"""
+$Id: HPEVAStorageVolumeMap.py,v 1.7 2012/06/27 19:51:14 egor Exp $"""
 
-__version__ = '$Revision: 1.6 $'[11:-2]
+__version__ = '$Revision: 1.7 $'[11:-2]
 
 from ZenPacks.community.CIMMon.modeler.plugins.community.cim.CIMStorageVolumeMap \
     import CIMStorageVolumeMap
@@ -32,7 +32,7 @@ class HPEVAStorageVolumeMap(CIMStorageVolumeMap):
         return {
             "CIM_StorageVolume":
                 (
-                    "SELECT __PATH,Access,BlockSize,DeviceID,DiskGroupID,ElementName,MirrorCache,Name,PreferredPath,raidType,ReadCachePolicy,SystemName,WriteCachePolicy FROM HPEVA_StorageVolume",
+                    "SELECT __PATH,Access,BlockSize,DeviceID,DiskGroupID,ElementName,MirrorCache,Name,NumberOfBlocks,PreferredPath,raidType,ReadCachePolicy,SystemName,WriteCachePolicy FROM HPEVA_StorageVolume",
                     None,
                     cs,
                     {
@@ -44,6 +44,7 @@ class HPEVAStorageVolumeMap(CIMStorageVolumeMap):
                         "title":"ElementName",
                         "mirrorCache":"MirrorCache",
                         "_diskname":"Name",
+                        "totalBlocks":"NumberOfBlocks",
                         "preferredPath":"PreferredPath",
                         "diskType":"raidType",
                         "readCachePolicy":"ReadCachePolicy",
