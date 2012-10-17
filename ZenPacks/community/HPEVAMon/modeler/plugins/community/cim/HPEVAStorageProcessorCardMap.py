@@ -13,9 +13,9 @@ __doc__="""HPEVAStorageProcessorCardMap
 HPEVAStorageProcessorCardMap maps HPEVA_StorageProcessorCard class to
 CIM_ComputerSystem class.
 
-$Id: HPEVAStorageProcessorCardMap.py,v 1.1 2012/06/27 19:50:53 egor Exp $"""
+$Id: HPEVAStorageProcessorCardMap.py,v 1.2 2012/10/17 18:23:57 egor Exp $"""
 
-__version__ = '$Revision: 1.1 $'[11:-2]
+__version__ = '$Revision: 1.2 $'[11:-2]
 
 from ZenPacks.community.CIMMon.modeler.plugins.community.cim.CIMControllerMap \
     import CIMControllerMap
@@ -33,7 +33,7 @@ class HPEVAStorageProcessorCardMap(CIMControllerMap):
         return {
             "CIM_Controller":
                 (
-                    "SELECT Description,Manufacturer,Model,SerialNumber,Tag,Version FROM HPEVA_StorageProcessorCard",
+                    "SELECT Description,Manufacturer,Model,SerialNumber,Tag,Version,OperationalStatus FROM HPEVA_StorageProcessorCard",
                     None,
                     cs,
                     {
@@ -44,6 +44,7 @@ class HPEVAStorageProcessorCardMap(CIMControllerMap):
                         "_sysname":"Tag",
                         "tag":"Tag",
                         "FWRev":"Version",
+                        "status":"OperationalStatus",
                     },
                 ),
             "CIM_MemberOfCollection":

@@ -12,9 +12,9 @@ __doc__="""HPEVAStoragePoolMap
 
 HPEVAStoragePoolMap maps HPEVA_StoragePool class to CIM_StoragePool class.
 
-$Id: HPEVAStoragePoolMap.py,v 1.6 2012/06/26 23:40:37 egor Exp $"""
+$Id: HPEVAStoragePoolMap.py,v 1.7 2012/10/17 18:23:24 egor Exp $"""
 
-__version__ = '$Revision: 1.6 $'[11:-2]
+__version__ = '$Revision: 1.7 $'[11:-2]
 
 from ZenPacks.community.CIMMon.modeler.plugins.community.cim.CIMStoragePoolMap \
     import CIMStoragePoolMap
@@ -32,7 +32,7 @@ class HPEVAStoragePoolMap(CIMStoragePoolMap):
         return {
             "CIM_StoragePool":
                 (
-                    "SELECT __PATH,ActualDiskFailureProtectionLevel,DiskGroupType,DiskType,ElementName,InstanceID,Name,PoolID,Primordial,TotalManagedSpace,Usage FROM HPEVA_StoragePool",
+                    "SELECT __PATH,ActualDiskFailureProtectionLevel,DiskGroupType,DiskType,ElementName,InstanceID,Name,PoolID,Primordial,TotalManagedSpace,Usage,OperationalStatus FROM HPEVA_StoragePool",
                     None,
                     cs,
                     {
@@ -47,6 +47,7 @@ class HPEVAStoragePoolMap(CIMStoragePoolMap):
                         "_primordial":"Primordial",
                         "totalManagedSpace":"TotalManagedSpace",
                         "usage":"Usage",
+                        "status":"OperationalStatus",
                     },
                 ),
             }

@@ -13,9 +13,9 @@ __doc__="""HPEVAStorageDiskEnclosureMap
 HPEVAStorageDiskEnclosureMap maps HPEVA_StorageDiskEnclosure class to
 CIM_Chassis class.
 
-$Id: HPEVAStorageDiskEnclosureMap.py,v 1.6 2012/06/26 23:39:40 egor Exp $"""
+$Id: HPEVAStorageDiskEnclosureMap.py,v 1.7 2012/10/17 18:23:03 egor Exp $"""
 
-__version__ = '$Revision: 1.6 $'[11:-2]
+__version__ = '$Revision: 1.7 $'[11:-2]
 
 from ZenPacks.community.CIMMon.modeler.plugins.community.cim.CIMChassisMap \
     import CIMChassisMap
@@ -31,7 +31,7 @@ class HPEVAStorageDiskEnclosureMap(CIMChassisMap):
         return {
             "CIM_Chassis":
                 (
-                    "SELECT __PATH,ChassisPackageType,ElementName,Manufacturer,Model,SerialNumber,PartNumber,Tag FROM HPEVA_StorageDiskEnclosure",
+                    "SELECT __PATH,ChassisPackageType,ElementName,Manufacturer,Model,SerialNumber,PartNumber,Tag,OperationalStatus FROM HPEVA_StorageDiskEnclosure",
                     None,
                     cs,
                     {
@@ -44,6 +44,7 @@ class HPEVAStorageDiskEnclosureMap(CIMChassisMap):
                         "_pn":"PartNumber",
                         "id":"Tag",
                         "_sysname":"Tag",
+                        "status":"OperationalStatus",
                     },
                 ),
             "HPEVA_StorageProduct":

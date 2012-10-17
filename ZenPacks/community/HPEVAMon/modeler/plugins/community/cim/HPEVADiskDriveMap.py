@@ -12,9 +12,9 @@ __doc__="""HPEVADiskDriveMap
 
 HPEVADiskDriveMap maps HPEVA_DiskDrive class to CIM_DiskDrive class.
 
-$Id: HPEVADiskDriveMap.py,v 1.4 2012/06/26 23:37:50 egor Exp $"""
+$Id: HPEVADiskDriveMap.py,v 1.5 2012/10/17 18:21:50 egor Exp $"""
 
-__version__ = '$Revision: 1.4 $'[11:-2]
+__version__ = '$Revision: 1.5 $'[11:-2]
 
 from ZenPacks.community.CIMMon.modeler.plugins.community.cim.CIMDiskDriveMap \
     import CIMDiskDriveMap
@@ -32,7 +32,7 @@ class HPEVADiskDriveMap(CIMDiskDriveMap):
         return {
             "CIM_DiskDrive":
                 (
-                    "SELECT __PATH,Caption,DeviceID,DriveType,ElementName,FormFactor,MaxMediaSize,Model,Name,SystemName FROM HPEVA_DiskDrive",
+                    "SELECT __PATH,Caption,DeviceID,DriveType,ElementName,FormFactor,MaxMediaSize,Model,Name,SystemName,OperationalStatus FROM HPEVA_DiskDrive",
                     None,
                     cs,
                     {
@@ -47,6 +47,7 @@ class HPEVADiskDriveMap(CIMDiskDriveMap):
                         "setProductKey":"Model",
                         "_diskname":"Name",
                         "_sysname":"SystemName",
+                        "status":"OperationalStatus",
                     }
                 ),
             "CIM_PhysicalPackage":

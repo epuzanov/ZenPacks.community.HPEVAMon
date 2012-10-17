@@ -12,9 +12,9 @@ __doc__="""HPEVAComputerSystemMap
 
 HPEVAComputerSystemMap maps HPEVA_ComputerSystem class to CIM_ComputerSystem class.
 
-$Id: HPEVAComputerSystemMap.py,v 1.2 2012/06/27 19:49:54 egor Exp $"""
+$Id: HPEVAComputerSystemMap.py,v 1.3 2012/10/17 18:21:15 egor Exp $"""
 
-__version__ = '$Revision: 1.2 $'[11:-2]
+__version__ = '$Revision: 1.3 $'[11:-2]
 
 from ZenPacks.community.CIMMon.modeler.plugins.community.cim.CIMComputerSystemMap \
     import CIMComputerSystemMap
@@ -30,7 +30,7 @@ class HPEVAComputerSystemMap(CIMComputerSystemMap):
         return {
             "CIM_ComputerSystem":
                 (
-                    "SELECT __PATH,Description,ElementName,FirmwareVersion,Name,PrimaryOwnerContact FROM HPEVA_StorageSystem",
+                    "SELECT __PATH,Description,ElementName,FirmwareVersion,Name,PrimaryOwnerContact,OperationalStatus FROM HPEVA_StorageSystem",
                     None,
                     cs,
                     {
@@ -40,6 +40,7 @@ class HPEVAComputerSystemMap(CIMComputerSystemMap):
                         "FWRev":"FirmwareVersion",
                         "_sysname":"Name",
                         "_contact":"PrimaryOwnerContact",
+                        "status":"OperationalStatus",
                     },
                 ),
             "CIM_PhysicalPackage":

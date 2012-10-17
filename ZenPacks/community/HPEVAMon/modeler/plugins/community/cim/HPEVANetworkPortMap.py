@@ -12,9 +12,9 @@ __doc__="""HPEVANetworkPortMap
 
 HPEVANetworkPortMap maps HPEVA_NetworkPort class to CIM_NetworkPort class.
 
-$Id: HPEVANetworkPortMap.py,v 1.7 2012/06/27 19:50:24 egor Exp $"""
+$Id: HPEVANetworkPortMap.py,v 1.8 2012/10/17 18:22:22 egor Exp $"""
 
-__version__ = '$Revision: 1.7 $'[11:-2]
+__version__ = '$Revision: 1.8 $'[11:-2]
 
 from ZenPacks.community.CIMMon.modeler.plugins.community.cim.CIMNetworkPortMap \
     import CIMNetworkPortMap
@@ -56,4 +56,4 @@ class HPEVANetworkPortMap(CIMNetworkPortMap):
         if not str(inst.get("setPath")).startswith("HPEVA_HostFCPort"):
             return ""
         return 'HPEVA_HostFCPortStatisticalData.InstanceID="%s.%s"'%(
-            inst.get("_sysname"),inst.get("_deviceid"))
+            inst.get("_sysname").split(".")[0],inst.get("_deviceid"))
